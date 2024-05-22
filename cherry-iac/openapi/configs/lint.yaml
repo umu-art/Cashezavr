@@ -1,0 +1,13 @@
+rules:
+  no-unresolved-refs: error
+  no-unused-components: error
+  security-defined: off
+  spec: error
+
+  operation-4xx-response: off
+  operation-description: error
+  operation-operationId: error
+  operation-operationId-unique: error
+  operation-operationId-url-safe: error
+
+  operation-singular-tag: error

@@ -1,0 +1,13 @@
+package ru.kazenin.cherry.outside;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class CherryOutsideApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(CherryOutsideApplication.class, args);
+    }
+
+}

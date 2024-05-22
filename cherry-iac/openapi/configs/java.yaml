@@ -1,0 +1,14 @@
+additionalProperties:
+  basePackage: ru.kazenin
+  apiPackage: ru.kazenin.api
+  modelPackage: ru.kazenin.model
+  groupId: ru.kazenin
+  artifactId: cherry-iac
+  serializableModel: "true"
+  dateLibrary: java8
+  useTags: true
+  library: spring-boot
+  interfaceOnly: true
+  skipDefaultInterface: true
+  useSpringBoot3: true
+  annotationLibrary: swagger2

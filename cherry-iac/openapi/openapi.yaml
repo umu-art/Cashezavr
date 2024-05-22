@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: Cherry
+  description: Cherry
+  version: 1.0.0
+
+servers:
+  - url: 'wait.ru'
+
+paths:
+  /load:
+    post:
+      tags:
+        - receipt
+      description: Загрузка чека в систему
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReceiptRequestDto"
+      responses:
+        200:
+          description: Выгруженный чек
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReceiptDto"
+
+components:
+  schemas:
+    ReceiptRequestDto:
+      required:
+        - qr
+      properties:
+        qr:
+          type: string
+
+    ReceiptDto:
+      properties:
+        receiptItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReceiptItemDto"
+
+    ReceiptItemDto:
+      properties:
+        productName:
+          type: string
+        productCount:
+          type: integer
+        productPrice:
+          type: number

@@ -1,0 +1,34 @@
+version: "3.9"
+
+name: cherry_iac
+
+services:
+  core:
+    image: bellsoft/liberica-openjdk-debian:21
+    ports:
+      - "3001:3001"
+
+  outside:
+    image: bellsoft/liberica-openjdk-debian:21
+    ports:
+      - "3002:3002"
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: "cherry_dev"
+      POSTGRES_USER: "cherry"
+      POSTGRES_PASSWORD: "cherry"
+    ports:
+      - "5432:5432"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=rmuser
+      - RABBITMQ_DEFAULT_PASS=rmpassword
+      - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit disk_free_limit 2147483648
+    ports:
+      - "15672:15672"
+      - "5672:5672"
