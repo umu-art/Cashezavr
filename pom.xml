@@ -22,7 +22,6 @@
     </properties>
 
     <modules>
-        <module>cherry-iac/openapi/server</module>
         <module>cherry-common</module>
         <module>cherry-core</module>
         <module>cherry-outside</module>
@@ -33,6 +32,11 @@
             <groupId>ru.kazenin</groupId>
             <artifactId>cherry-iac</artifactId>
             <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>

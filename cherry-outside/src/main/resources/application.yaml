@@ -6,9 +6,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/cherry_dev
     username: cherry
     password: cherry
-  flyway:
-    baseline-on-migrate: true
-    baseline-version: 0.0.1
 
   jpa:
     hibernate:

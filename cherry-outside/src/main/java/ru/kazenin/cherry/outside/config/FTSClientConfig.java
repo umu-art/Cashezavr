@@ -25,8 +25,7 @@ public class FTSClientConfig {
             @Value("${fns.userAgent}") String userAgent,
             @Value("${fns.deviceOS}") String deviceOS,
             @Value("${fns.deviceID}") String deviceID,
-            @Value("${fns.clientVersion}") String clientVersion,
-            @Value("${fns.sessionId}") String sessionId) {
+            @Value("${fns.clientVersion}") String clientVersion) {
         return RestClient.builder()
                 .requestFactory(new HttpComponentsClientHttpRequestFactory())
                 .baseUrl(host)
@@ -38,7 +37,6 @@ public class FTSClientConfig {
                 .defaultHeader("Device-OS", deviceOS)
                 .defaultHeader("Device-Id", deviceID)
                 .defaultHeader("clientVersion", clientVersion)
-                .defaultHeader("sessionId", sessionId)
                 .build();
 
     }

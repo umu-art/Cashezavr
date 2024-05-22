@@ -1,0 +1,42 @@
+openapi: 3.0.3
+
+info:
+  title: Cherry register
+  description: Регистрация нового пользователя
+  version: 1.0.0
+
+servers:
+  - url: 'wait.ru'
+
+paths:
+  /cherry/register:
+    post:
+      tags:
+        - register
+      description: Регистрация нового пользователя
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterDto"
+      responses:
+        200:
+          description: Успешно
+        409:
+          description: Такой пользователь уже существует
+
+components:
+  schemas:
+    RegisterDto:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+
+  

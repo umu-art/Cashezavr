@@ -17,19 +17,19 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "receiptItem")
+@Table(name = "receipt_item")
 public class ReceiptItemEntity extends BaseEntity {
 
-    @Column(name = "productName", nullable = false)
+    @Column(name = "product_name", nullable = false)
     private String productName;
 
-    @Column(name = "productCount", nullable = false)
+    @Column(name = "product_count", nullable = false)
     private int productCount;
 
-    @Column(name = "productPrice", nullable = false)
+    @Column(name = "product_price", nullable = false)
     private double productPrice;
 
     @ManyToOne
-    @JoinColumn(name = "receiptUuid", nullable = false)
+    @JoinColumn(name = "receipt_uuid", nullable = false)
     private ReceiptEntity receiptEntity;
 }

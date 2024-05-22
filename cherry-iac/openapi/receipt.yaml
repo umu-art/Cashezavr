@@ -1,18 +1,20 @@
 openapi: 3.0.3
+
 info:
-  title: Cherry
-  description: Cherry
+  title: Cherry receipts
+  description: Работа с чеками
   version: 1.0.0
 
 servers:
   - url: 'wait.ru'
 
 paths:
-  /load:
+  /cherry/core/receipt/load:
     post:
       tags:
         - receipt
       description: Загрузка чека в систему
+      operationId: loadReceipt
       requestBody:
         content:
           application/json:
@@ -25,6 +27,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReceiptDto"
+        201:
+          description: Загружено, чек будет позже
+
+  /cherry/core/receipt/getAll:
+    get:
+      tags:
+        - receipt
+      description: Получение списка чеков
+      operationId: getAllReceipts
+      responses:
+        200:
+          description: Список загруженных чеков
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReceiptDto"
 
 components:
   schemas:
@@ -37,10 +57,15 @@ components:
 
     ReceiptDto:
       properties:
+        qr:
+          type: string
         receiptItems:
           type: array
           items:
             $ref: "#/components/schemas/ReceiptItemDto"
+        inBill:
+          type: string
+          format: date-time
 
     ReceiptItemDto:
       properties:

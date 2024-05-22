@@ -27,21 +27,21 @@ public class BaseEntity {
     @Column(name = "uuid", nullable = false)
     private UUID uuid;
 
-    @Column(name = "createdTime", nullable = false)
-    private OffsetDateTime createdTime;
+    @Column(name = "created", nullable = false)
+    private OffsetDateTime created;
 
-    @Column(name = "updatedTime")
-    private OffsetDateTime updatedTime;
+    @Column(name = "updated")
+    private OffsetDateTime updated;
 
     @PrePersist
     public void prePersist() {
-        if (isNull(this.createdTime)) {
-            this.createdTime = OffsetDateTime.now();
+        if (isNull(this.created)) {
+            this.created = OffsetDateTime.now();
         }
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedTime = OffsetDateTime.now();
+        this.updated = OffsetDateTime.now();
     }
 }
