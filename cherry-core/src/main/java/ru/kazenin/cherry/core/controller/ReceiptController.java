@@ -18,7 +18,9 @@ public class ReceiptController implements ReceiptApi {
 
     @Override
     public ResponseEntity<ReceiptDto> loadReceipt(ReceiptRequestDto receiptRequestDto) {
-        return ResponseEntity.ok(receiptService.loadReceipt(receiptRequestDto));
+        return receiptService.loadReceipt(receiptRequestDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(201).build());
     }
 
     @Override

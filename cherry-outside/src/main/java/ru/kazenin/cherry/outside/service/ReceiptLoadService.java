@@ -1,16 +1,8 @@
 package ru.kazenin.cherry.outside.service;
 
-import org.springframework.lang.NonNull;
-import ru.kazenin.model.ReceiptDto;
-import ru.kazenin.model.ReceiptRequestDto;
+import java.util.UUID;
 
 public interface ReceiptLoadService {
 
-    /**
-     * Выполняет выгрузку данных чека из ФНС
-     *
-     * @param requestDto данные для выгрузки
-     * @return данные чека
-     */
-    ReceiptDto load(@NonNull ReceiptRequestDto requestDto);
+    void loadReceipt(UUID receiptUuid);
 }

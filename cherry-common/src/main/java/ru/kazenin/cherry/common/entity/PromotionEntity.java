@@ -2,6 +2,8 @@ package ru.kazenin.cherry.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +21,10 @@ import java.time.OffsetDateTime;
 @Entity
 @Table(name = "promotion")
 public class PromotionEntity extends BaseEntity {
+
+    @ManyToOne
+    @JoinColumn(name = "manager_username", referencedColumnName = "username", nullable = false)
+    private ManagerEntity manager;
 
     @Column(name = "starts")
     private OffsetDateTime starts;

@@ -20,14 +20,14 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "receipt_item")
 public class ReceiptItemEntity extends BaseEntity {
 
-    @Column(name = "product_name", nullable = false)
-    private String productName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @Column(name = "product_count", nullable = false)
-    private int productCount;
+    @Column(name = "count", nullable = false)
+    private int count;
 
-    @Column(name = "product_price", nullable = false)
-    private double productPrice;
+    @Column(name = "price", nullable = false)
+    private double price;
 
     @ManyToOne
     @JoinColumn(name = "receipt_uuid", nullable = false)

@@ -1,9 +1,7 @@
 package ru.kazenin.cherry.common.entity;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,4 +29,10 @@ public class ClientEntity extends BaseEntity {
 
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "actual_balance")
+    private double actualBalance;
+
+    @Column(name = "all_balance")
+    private double allBalance;
 }

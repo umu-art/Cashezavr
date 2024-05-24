@@ -3,6 +3,15 @@ version: "3.9"
 name: cherry_iac
 
 services:
+
+  redis:
+    image: "redis:alpine"
+    command: redis-server --requirepass cherry
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
   postgres:
     image: postgres:latest
     hostname: postgres

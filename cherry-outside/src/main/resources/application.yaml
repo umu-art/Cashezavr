@@ -12,6 +12,17 @@ spring:
       ddl-auto: none
     open-in-view: false
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: cherry
+
+cherry:
+  executors:
+    loadPoll: 3
+  baseCashBack: 10
+
 fns:
   host: "https://irkkt-mobile.nalog.ru:8888"
   userAgent: "billchecker/2.9.0 (iPhone; iOS 13.6; Scale/2.00)"
@@ -19,6 +30,11 @@ fns:
   deviceID: "597d8cb6-c96b-4693-8e1c-24e5f9983f04"
   clientVersion: "2.9.0"
   clientSecret: "IyvrAbKt9h/8p6a7QPh8gpkXYQ4="
+
+rabbit:
+  host: localhost
+  login: rmuser
+  password: rmpassword
 
 server:
   port: 3002
@@ -57,3 +73,4 @@ management:
 logging:
   level:
     root: info
+    ru.kazenin: debug

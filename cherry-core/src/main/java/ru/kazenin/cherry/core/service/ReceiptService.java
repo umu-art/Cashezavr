@@ -1,14 +1,14 @@
 package ru.kazenin.cherry.core.service;
 
-import org.springframework.http.ResponseEntity;
 import ru.kazenin.model.ReceiptDto;
 import ru.kazenin.model.ReceiptRequestDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReceiptService {
 
-    ReceiptDto loadReceipt(ReceiptRequestDto receiptRequestDto);
+    Optional<ReceiptDto> loadReceipt(ReceiptRequestDto receiptRequestDto);
 
     List<ReceiptDto> getAllReceipts();
 }

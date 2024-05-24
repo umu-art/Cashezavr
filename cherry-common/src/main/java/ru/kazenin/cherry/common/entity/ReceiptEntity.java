@@ -1,7 +1,9 @@
 package ru.kazenin.cherry.common.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -26,31 +28,24 @@ import java.util.List;
 @Table(name = "receipt")
 public class ReceiptEntity extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_username", referencedColumnName = "username", nullable = false)
     private ClientEntity client;
 
     @Column(name = "qr", unique = true, nullable = false)
     private String qr;
 
-    @OneToMany(mappedBy = "receiptEntity")
-    @Fetch(FetchMode.JOIN)
+    @OneToMany(mappedBy = "receiptEntity", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<ReceiptItemEntity> receiptItems;
 
-    @Column(name = "outside_loaded")
-    private OffsetDateTime outsideLoaded;
-
-    @Column(name = "calculated")
-    private OffsetDateTime calculated;
+    @Column(name = "loaded")
+    private OffsetDateTime loaded;
 
     @Column(name = "return_sum")
     private double returnSum;
 
-    @Column(name = "in_bill")
-    private OffsetDateTime inBill;
-
-    @ManyToOne
-    @JoinColumn(name = "bill_uuid")
-    private BillEntity billEntity;
+    @Column(name = "load_lock")
+    private boolean loadLock;
 
 }

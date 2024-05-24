@@ -3,50 +3,75 @@ package ru.kazenin.cherry.outside.service.impl;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import ru.kazenin.cherry.common.entity.ReceiptEntity;
+import ru.kazenin.cherry.common.entity.ReceiptItemEntity;
+import ru.kazenin.cherry.outside.jpa.ReceiptJpa;
+import ru.kazenin.cherry.outside.service.FinanceService;
+import ru.kazenin.cherry.outside.service.OutsideAuthService;
 import ru.kazenin.cherry.outside.service.ReceiptLoadService;
-import ru.kazenin.model.ReceiptDto;
-import ru.kazenin.model.ReceiptItemDto;
-import ru.kazenin.model.ReceiptRequestDto;
 
-import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class ReceiptLoadServiceImpl implements ReceiptLoadService {
 
-    public static final String ID = "id";
+    private static final String ID = "id";
     private final RestClient ftsClient;
 
-    /**
-     * Выполняет выгрузку данных чека из ФНС
-     *
-     * @param requestDto данные для выгрузки
-     * @return данные чека
-     */
-    @Override
-    public ReceiptDto load(@NonNull ReceiptRequestDto requestDto) {
-        log.info("attempt to load {}", requestDto);
+    private final ReceiptJpa receiptJpa;
+    private final FinanceService financeService;
+    private final OutsideAuthService outsideAuthService;
 
-        var uuid = getReceiptUuid(requestDto);
-        var rowResult = getReceiptRaw(uuid);
-        return parseReceiptRaw(rowResult);
+    @Override
+    public void loadReceipt(UUID receiptUuid) {
+        var receipt = receiptJpa.findById(receiptUuid).orElseThrow();
+
+        if (isLoaded(receipt)) {
+            return;
+        }
+
+        fillReceiptEntity(receipt);
+        financeService.processReceipt(receipt);
+
+        receiptJpa.saveAndFlush(receipt);
+    }
+
+    private boolean isLoaded(ReceiptEntity receipt) {
+        return receipt.getLoaded() != null;
+    }
+
+    /**
+     * Наполняет сущность чека данными из ФНС и проставляет дату выгрузки.
+     *
+     * @param receipt сущность для наполнения
+     */
+    private void fillReceiptEntity(ReceiptEntity receipt) {
+        var fnsReceiptUuid = getFnsReceiptUuid(receipt.getQr());
+        var fnsReceiptRow = getFnsReceiptRaw(fnsReceiptUuid);
+
+        receipt.setReceiptItems(parseReceiptItems(fnsReceiptRow, receipt));
+        receipt.setLoaded(OffsetDateTime.now());
     }
 
     /**
      * Получает uuid чека в системе ФНС
      *
-     * @param requestDto данные для выгрузки
+     * @param qr данные для выгрузки
      * @return uuid чека
      */
-    private String getReceiptUuid(ReceiptRequestDto requestDto) {
+    private String getFnsReceiptUuid(String qr) {
         var result = ftsClient.post()
                 .uri("/v2/ticket")
-                .body("{\"qr\": \"" + requestDto.getQr() + "\"}")
+                .header("sessionId", outsideAuthService.getSessionId())
+                .body("{\"qr\": \"" + qr + "\"}")
                 .retrieve()
                 .toEntity(JsonNode.class);
 
@@ -59,9 +84,10 @@ public class ReceiptLoadServiceImpl implements ReceiptLoadService {
      * @param receiptUuid uuid чека
      * @return содержимое чека
      */
-    private JsonNode getReceiptRaw(String receiptUuid) {
+    private JsonNode getFnsReceiptRaw(String receiptUuid) {
         return ftsClient.get()
                 .uri("/v2/tickets/" + receiptUuid)
+                .header("sessionId", outsideAuthService.getSessionId())
                 .retrieve()
                 .toEntity(JsonNode.class)
                 .getBody()
@@ -72,23 +98,25 @@ public class ReceiptLoadServiceImpl implements ReceiptLoadService {
     }
 
     /**
-     * Парсит данные полученные с ФНС
+     * Парсит данные полученные с ФНС в массив элементов чека
      *
-     * @param raw голые данные
-     * @return дтоха с нашей структурой
+     * @param raw голые данные из ФНС
+     * @return массив элементов чека
      */
-    private ReceiptDto parseReceiptRaw(JsonNode raw) {
-        ReceiptDto result = new ReceiptDto();
+    private List<ReceiptItemEntity> parseReceiptItems(JsonNode raw, ReceiptEntity receipt) {
+        var result = new ArrayList<ReceiptItemEntity>();
 
         for (JsonNode itemRaw : raw) {
-            ReceiptItemDto itemDto = new ReceiptItemDto()
-                    .productName(itemRaw.get("name").asText())
-                    .productCount(itemRaw.get("quantity").asInt())
-                    .productPrice(BigDecimal.valueOf(itemRaw.get("price").asDouble() / 100));
+            ReceiptItemEntity itemDto = new ReceiptItemEntity();
+            itemDto.setName(itemRaw.get("name").asText());
+            itemDto.setCount(itemRaw.get("quantity").asInt());
+            itemDto.setPrice(itemRaw.get("price").asDouble() / 100);
+            itemDto.setReceiptEntity(receipt);
 
-            result.addReceiptItemsItem(itemDto);
+            result.add(itemDto);
         }
 
         return result;
     }
+
 }

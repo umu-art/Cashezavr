@@ -11,5 +11,9 @@ import java.util.UUID;
 @Repository
 public interface ReceiptJpa extends JpaRepository<ReceiptEntity, UUID> {
 
-    List<ReceiptEntity> findAllByClient(ClientEntity client);
+    boolean existsByQr(String qr);
+
+    int countByUuidAndLoadedNotNull(UUID uuid);
+
+    List<ReceiptEntity> findAllByClient(ClientEntity user);
 }

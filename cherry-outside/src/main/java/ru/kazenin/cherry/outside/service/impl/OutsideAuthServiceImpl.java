@@ -16,13 +16,10 @@ import static java.util.Objects.isNull;
 public class OutsideAuthServiceImpl implements OutsideAuthService {
 
     private final RestClient restClient;
-
-    @Value("${fns.clientSecret}")
-    private String clientSecret;
-
     @Value("${fns.deviceOS}")
     String deviceOS;
-
+    @Value("${fns.clientSecret}")
+    private String clientSecret;
     private String phone;
     private String sessionId;
     private String refreshToken;
@@ -60,7 +57,7 @@ public class OutsideAuthServiceImpl implements OutsideAuthService {
         }
 
         sessionId = result.get("sessionId").asText();
-        refreshToken = result.get("refreshToken").asText();
+        refreshToken = result.get("refresh_token").asText();
 
         log.info("Успешная авторизация");
     }

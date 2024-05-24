@@ -15,12 +15,23 @@ spring:
       ddl-auto: update  # TODO: migrations
     open-in-view: false
 
+cherry:
+  receipts:
+    poll:
+      maxTime: 2000
+      waitTime: 100
+
 server:
   port: 3001
   error:
     include-exception: true
     include-message: always
     include-binding-errors: always
+
+rabbit:
+  host: localhost
+  login: rmuser
+  password: rmpassword
 
 management:
   endpoints:
@@ -52,4 +63,6 @@ management:
 logging:
   level:
     root: info
+    ru.kazenin: trace
+    org.hibernate.SQL: trace
 

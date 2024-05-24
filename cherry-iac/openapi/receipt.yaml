@@ -63,15 +63,12 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ReceiptItemDto"
-        inBill:
-          type: string
-          format: date-time
 
     ReceiptItemDto:
       properties:
-        productName:
+        name:
           type: string
-        productCount:
+        count:
           type: integer
-        productPrice:
+        price:
           type: number

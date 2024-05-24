@@ -15,7 +15,7 @@ public class ContextHolderImpl implements ContextHolder {
     private final ClientJpa clientJpa;
 
     @Override
-    public ClientEntity getCurrentUser() {
+    public ClientEntity getCurrentClient() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
         return clientJpa.findByUsername(currentUsername).get();

@@ -1,6 +1,9 @@
 package ru.kazenin.cherry.common.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -12,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import ru.kazenin.cherry.common.dto.BillStatus;
 
 import java.util.List;
 
@@ -28,7 +32,10 @@ public class BillEntity extends BaseEntity {
     @JoinColumn(name = "client_username", referencedColumnName = "username", nullable = false)
     private ClientEntity client;
 
-    @OneToMany(mappedBy = "billEntity")
-    @Fetch(FetchMode.JOIN)
-    private List<ReceiptEntity> receipts;
+    @Column(name = "sum")
+    private double sum;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private BillStatus status;
 }
