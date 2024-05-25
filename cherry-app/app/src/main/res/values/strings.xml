@@ -1,8 +1,19 @@
 <resources>
     <string name="app_name">cherry-app</string>
+    <string name="title_activity_login">Вход</string>
+    <string name="title_activity_register">Регистрация</string>
     <string name="title_support">Поддержка</string>
     <string name="title_receipts">Чеки</string>
     <string name="title_qrscan">Сканировать</string>
     <string name="title_bills">Выплаты</string>
     <string name="title_profile">Профиль</string>
+    <string name="prompt_username">Логин</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="prompt_email">Почта</string>
+    <string name="prompt_phone">Телефон</string>
+    <string name="action_sign_in">Войти</string>
+    <string name="action_register">Зарегистрироваться</string>
+    <string name="go_register">Еще нет аккаунта?</string>
+    <string name="go_login">Уже есть аккаунт?</string>
+    <string name="login_failed">Неправильный логин или пароль</string>
 </resources>

@@ -36,6 +36,7 @@ build/
 
 ### IaC ###
 /cherry-iac/openapi/server/
+/cherry-iac/openapi/android/
 
 ### Android ###
 /cherry-app/build/

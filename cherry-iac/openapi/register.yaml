@@ -26,6 +26,19 @@ paths:
         409:
           description: Такой пользователь уже существует
 
+  /cherry/try:
+    get:
+      tags:
+        - register
+      description: Проверка успешности авторизации
+      operationId: tryAuth
+      responses:
+        200:
+          description: Успешно
+        401:
+          description: Иди авторизуйся
+
+
 components:
   schemas:
     RegisterDto:

@@ -1,4 +1,4 @@
-package ru.kazenin.cherry.app.placeholder;
+package ru.kazenin.cherry.app.ui.receipts.placeholder;
 
 import java.util.ArrayList;
 import java.util.HashMap;

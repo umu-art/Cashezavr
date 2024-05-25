@@ -1,13 +1,18 @@
 package ru.kazenin.cherry.app;
 
+import android.content.Intent;
 import android.os.Bundle;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import lombok.var;
+import ru.kazenin.cherry.app.data.Api;
+import ru.kazenin.cherry.app.data.LoginHolder;
 import ru.kazenin.cherry.app.databinding.ActivityMainBinding;
+import ru.kazenin.cherry.app.ui.login.LoginActivity;
+
+import static java.util.Objects.isNull;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,15 +22,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Api.init();
+
+        if (isNull(LoginHolder.loggedInUser)) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        var navView = findViewById(R.id.nav_view);
 
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_qrscan, R.id.navigation_profile, R.id.navigation_bills)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        var appBarConfiguration =
+                new AppBarConfiguration.Builder(
+                        R.id.navigation_qrscan,
+                        R.id.navigation_profile,
+                        R.id.navigation_bills,
+                        R.id.navigation_receipts,
+                        R.id.navigation_support)
+                        .build();
+        var navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }

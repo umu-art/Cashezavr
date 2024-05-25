@@ -38,6 +38,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/cherry/core/**").authenticated()
                         .requestMatchers("/cherry/register").permitAll()
+                        .requestMatchers("/cherry/try").authenticated()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/actuator").permitAll()
                         .anyRequest().denyAll())

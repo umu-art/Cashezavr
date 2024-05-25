@@ -18,4 +18,9 @@ public class RegisterController implements RegisterApi {
         registerService.register(registerDto);
         return ResponseEntity.ok().build();
     }
+
+    @Override
+    public ResponseEntity<Void> tryAuth() {
+        return ResponseEntity.ok().build();
+    }
 }

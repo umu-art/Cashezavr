@@ -1,13 +1,11 @@
 package ru.kazenin.cherry.app.ui.bills;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import ru.kazenin.cherry.app.ui.bills.placeholder.PlaceholderContent.PlaceholderItem;
+import androidx.recyclerview.widget.RecyclerView;
 import ru.kazenin.cherry.app.databinding.FragmentBillsBinding;
+import ru.kazenin.cherry.app.ui.bills.placeholder.PlaceholderContent.PlaceholderItem;
 
 import java.util.List;
 

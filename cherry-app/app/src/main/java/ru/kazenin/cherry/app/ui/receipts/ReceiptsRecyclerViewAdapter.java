@@ -1,12 +1,11 @@
 package ru.kazenin.cherry.app.ui.receipts;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import ru.kazenin.cherry.app.ui.placeholder.PlaceholderContent.PlaceholderItem;
+import androidx.recyclerview.widget.RecyclerView;
 import ru.kazenin.cherry.app.databinding.FragmentReceiptsBinding;
+import ru.kazenin.cherry.app.ui.receipts.placeholder.PlaceholderContent.PlaceholderItem;
 
 import java.util.List;
 
