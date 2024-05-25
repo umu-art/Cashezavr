@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/navigation_support"
+            android:icon="@drawable/bm_support"
+            android:title="@string/title_support"/>
+
+    <item
+            android:id="@+id/navigation_receipts"
+            android:icon="@drawable/bm_receipts"
+            android:title="@string/title_receipts"/>
+
+    <item
+            android:id="@+id/navigation_qrscan"
+            android:icon="@drawable/bm_qrscan"
+            android:title="@string/title_qrscan"/>
+
+    <item
+            android:id="@+id/navigation_bills"
+            android:icon="@drawable/bm_bills"
+            android:title="@string/title_bills"/>
+
+    <item
+            android:id="@+id/navigation_profile"
+            android:icon="@drawable/bm_profile"
+            android:title="@string/title_profile"/>
+
+</menu>

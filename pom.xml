@@ -25,6 +25,7 @@
         <module>cherry-common</module>
         <module>cherry-core</module>
         <module>cherry-outside</module>
+        <module>cherry-production</module>
     </modules>
 
     <dependencies>

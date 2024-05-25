@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">cherry-app</string>
+    <string name="title_support">Поддержка</string>
+    <string name="title_receipts">Чеки</string>
+    <string name="title_qrscan">Сканировать</string>
+    <string name="title_bills">Выплаты</string>
+    <string name="title_profile">Профиль</string>
+</resources>
