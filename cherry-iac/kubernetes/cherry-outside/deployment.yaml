@@ -18,7 +18,9 @@ spec:
     spec:
       containers:
         - name: cherry-outside
-          image: vikazeni/cherry-outside:latest
+          image: ghcr.io/umu-art/cherry-outside:master
           imagePullPolicy: Always
+      imagePullSecrets:
+        - name: github-container-registry
       restartPolicy: Always
       
