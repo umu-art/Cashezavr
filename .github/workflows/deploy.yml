@@ -50,7 +50,7 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}/${{ github.actor }}/cherry-core
       
-    - name: Build and push Docker image for core=
+    - name: Build and push Docker image for core
       uses: docker/build-push-action@v5.3.0
       with:
         context: ./cherry-core
