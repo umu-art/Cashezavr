@@ -10,7 +10,7 @@ env:
   REGISTRY: ghcr.io
   
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
     
     permissions:
@@ -41,19 +41,55 @@ jobs:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
+
+    # Build core
+
+    - name: Extract metadata for core
+      id: meta-core
       uses: docker/metadata-action@v5.5.1
       with:
         images: ${{ env.REGISTRY }}/${{ github.actor }}/cherry-core
       
-    - name: Build and push Docker image
-      id: push
+    - name: Build and push Docker image for core=
       uses: docker/build-push-action@v5.3.0
       with:
         context: ./cherry-core
         file: ./cherry-core/Dockerfile
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+        tags: ${{ steps.meta-core.outputs.tags }}
+        labels: ${{ steps.meta-core.outputs.labels }}
+
+    # Build outside
+
+    - name: Extract metadata for outside
+      id: meta-outside
+      uses: docker/metadata-action@v5.5.1
+      with:
+        images: ${{ env.REGISTRY }}/${{ github.actor }}/cherry-outside
+
+    - name: Build and push Docker image for outside
+      uses: docker/build-push-action@v5.3.0
+      with:
+        context: ./cherry-outside
+        file: ./cherry-outside/Dockerfile
+        push: true
+        tags: ${{ steps.meta-outside.outputs.tags }}
+        labels: ${{ steps.meta-outside.outputs.labels }}
+
+    # Build production
+
+    - name: Extract metadata for production
+      id: meta-production
+      uses: docker/metadata-action@v5.5.1
+      with:
+        images: ${{ env.REGISTRY }}/${{ github.actor }}/cherry-production
+
+    - name: Build and push Docker image for production
+      id: push
+      uses: docker/build-push-action@v5.3.0
+      with:
+        context: ./cherry-production
+        file: ./cherry-production/Dockerfile
+        push: true
+        tags: ${{ steps.meta-production.outputs.tags }}
+        labels: ${{ steps.meta-production.outputs.labels }}
