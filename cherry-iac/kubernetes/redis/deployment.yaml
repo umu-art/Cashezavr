@@ -20,7 +20,7 @@ spec:
         - name: redis
           image: redis:latest
           command:
-            - redis-server --requirepass cherry
+            - redis-server
           imagePullPolicy: Always
           env:
             - name: REDIS_REPLICATION_MODE
