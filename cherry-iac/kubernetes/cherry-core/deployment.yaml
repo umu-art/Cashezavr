@@ -20,5 +20,7 @@ spec:
         - name: cherry-core
           image: ghcr.io/umu-art/cherry-core:master
           imagePullPolicy: Always
+      imagePullSecrets:
+        - name: github-container-registry
       restartPolicy: Always
       
