@@ -21,6 +21,9 @@ spec:
           image: redis:latest
           command:
             - redis-server
+          args:
+            - --requirepass
+            - cherry
           imagePullPolicy: Always
           env:
             - name: REDIS_REPLICATION_MODE
