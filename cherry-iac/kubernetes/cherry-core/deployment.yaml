@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: cherry-core
-          image: vikazeni/cherry-core:latest
+          image: ghcr.io/umu-art/cherry-core:master
           imagePullPolicy: Always
       restartPolicy: Always
       
