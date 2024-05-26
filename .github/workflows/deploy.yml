@@ -26,14 +26,8 @@ jobs:
         distribution: 'liberica'
         cache: maven
 
-    - name: cd to cherry-iac/openapi
-      run: cd cherry-iac/openapi
-
     - name: Build api
-      run: ./build-core-api.sh
-      
-    - name: cd to cherry-core
-      run: cd ../../cherry-core
+      run: (cd cherry-iac/openapi; chmod 777 ./build-core-api.sh;  ./build-core-api.sh)
         
     - name: Build with Maven
       run: mvn -B package --file pom.xml
