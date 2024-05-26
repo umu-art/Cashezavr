@@ -19,11 +19,11 @@ spec:
       containers:
         - name: redis
           image: redis:latest
+          command:
+            - redis-server --requirepass cherry
           imagePullPolicy: Always
           env:
             - name: REDIS_REPLICATION_MODE
               value: master
-            - name: REDIS_PASSWORD
-              value: cherry
       restartPolicy: Always
       
