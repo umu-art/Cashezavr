@@ -46,7 +46,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v5.5.1
       with:
-        images: ${{ env.REGISTRY }}/cherry-core
+        images: ${{ env.REGISTRY }}/${{ github.actor }}/cherry-core
       
     - name: Build and push Docker image
       id: push
