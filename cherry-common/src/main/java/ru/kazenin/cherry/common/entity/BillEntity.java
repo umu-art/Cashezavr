@@ -1,23 +1,19 @@
 package ru.kazenin.cherry.common.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import ru.kazenin.cherry.common.dto.BillStatus;
-
-import java.util.List;
 
 @SuperBuilder
 @Data
@@ -28,7 +24,7 @@ import java.util.List;
 @Table(name = "bill")
 public class BillEntity extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_username", referencedColumnName = "username", nullable = false)
     private ClientEntity client;
 

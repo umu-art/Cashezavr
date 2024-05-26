@@ -13,6 +13,9 @@ import ru.kazenin.cherry.app.R;
 import ru.kazenin.cherry.app.data.LoginHolder;
 import ru.kazenin.cherry.app.databinding.ActivityLoginBinding;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class LoginActivity extends AppCompatActivity {
 
     @Override
@@ -27,20 +30,26 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = binding.login;
         final Button goRegisterButton = binding.goRegister;
         final ProgressBar loadingProgressBar = binding.loading;
+        var activity = this;
 
         loginButton.setOnClickListener(v -> {
-            runOnUiThread(() -> loadingProgressBar.setVisibility(View.VISIBLE));
+            loadingProgressBar.setVisibility(View.VISIBLE);
 
-            var loginSuccess = LoginHolder.loginAttempt(usernameEditText.getText().toString(),
-                    passwordEditText.getText().toString());
-            if (loginSuccess) {
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            } else {
-                usernameEditText.setError(getString(R.string.login_failed));
-                passwordEditText.setError(getString(R.string.login_failed));
-            }
-            runOnUiThread(() -> loadingProgressBar.setVisibility(View.INVISIBLE));
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    var loginSuccess = LoginHolder.loginAttempt(usernameEditText.getText().toString(),
+                            passwordEditText.getText().toString());
+                    if (loginSuccess) {
+                        startActivity(new Intent(activity, MainActivity.class));
+                    } else {
+                        usernameEditText.setError(getString(R.string.login_failed));
+                        passwordEditText.setError(getString(R.string.login_failed));
+                    }
+                }
+            }, 0);
+
+            loadingProgressBar.setVisibility(View.INVISIBLE);
         });
 
         goRegisterButton.setOnClickListener(v -> {

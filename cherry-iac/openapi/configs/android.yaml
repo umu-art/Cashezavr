@@ -7,6 +7,3 @@ additionalProperties:
   serializableModel: "true"
   useTags: true
   library: httpclient
-  androidGradleVersion: "8.4"
-  androidBuildToolsVersion: "8.2.0"
-  androidSdkVersion: "34"

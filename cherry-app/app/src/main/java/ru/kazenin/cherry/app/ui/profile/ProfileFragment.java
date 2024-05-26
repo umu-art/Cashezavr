@@ -1,5 +1,6 @@
 package ru.kazenin.cherry.app.ui.profile;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,28 +8,49 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import ru.kazenin.cherry.app.R;
+import lombok.var;
+import ru.kazenin.cherry.app.data.DataHolder;
+import ru.kazenin.cherry.app.databinding.FragmentProfileBinding;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ProfileFragment extends Fragment {
 
-    private ProfileViewModel mViewModel;
-
-    public static ProfileFragment newInstance() {
-        return new ProfileFragment();
-    }
+    private final Timer timer = new Timer();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+
+        var binding = FragmentProfileBinding.inflate(inflater, container, false);
+        var activity = this.getActivity();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                setUserinfo(activity, binding);
+            }
+        }, 0, DataHolder.updatePeriod);
+
+        return binding.getRoot();
+    }
+
+    private void setUserinfo(Activity activity, FragmentProfileBinding binding) {
+        DataHolder.fillClientDtoIfNull();
+        var user = DataHolder.clientDto;
+
+        activity.runOnUiThread(() -> {
+            binding.username.setText(user.getUsername());
+            binding.phone.setText(user.getPhone());
+            binding.email.setText(user.getEmail());
+            binding.balance.setText("Ваш актуальный баланс: " + user.getActualBalance().toString());
+        });
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        // TODO: Use the ViewModel
+    public void onDestroyView() {
+        super.onDestroyView();
+        timer.cancel();
+        timer.purge();
     }
-
 }

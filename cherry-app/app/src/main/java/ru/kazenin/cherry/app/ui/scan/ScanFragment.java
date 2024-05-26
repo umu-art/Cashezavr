@@ -1,8 +1,9 @@
 package ru.kazenin.cherry.app.ui.scan;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,42 +17,34 @@ import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import lombok.var;
 import ru.kazenin.cherry.app.R;
 import ru.kazenin.cherry.app.image.ImageAnalyzer;
+import ru.kazenin.cherry.app.ui.load.ReceiptLoadActivity;
 
 public class ScanFragment extends Fragment {
 
-    private ScanViewModel mViewModel;
-
-    public static ScanFragment newInstance() {
-        return new ScanFragment();
-    }
+    public static boolean loading = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        var activity = this.getActivity();
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, 20);
+
+        bindCamera(activity);
+
         return inflater.inflate(R.layout.fragment_scan, container, false);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ScanViewModel.class);
-
-        ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.CAMERA}, 20);
-        bindCamera();
-    }
-
-    private void bindCamera() {
-        var cameraProviderFuture = ProcessCameraProvider.getInstance(this.getActivity());
+    private void bindCamera(Activity activity) {
+        var cameraProviderFuture = ProcessCameraProvider.getInstance(activity);
         cameraProviderFuture.addListener(() -> {
             try {
                 var cameraProvider = cameraProviderFuture.get();
-
                 var preview = new Preview.Builder().build();
-                PreviewView previewView = this.getActivity().findViewById(R.id.cameraPreview);
+                PreviewView previewView = activity.findViewById(R.id.cameraPreview);
                 preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
                 var analysis =
@@ -59,8 +52,16 @@ public class ScanFragment extends Fragment {
                                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                                 .build();
 
-                analysis.setAnalyzer(ContextCompat.getMainExecutor(this.getActivity()),
-                        new ImageAnalyzer(qr -> Log.i("QR", "new qr: " + qr)));
+                analysis.setAnalyzer(ContextCompat.getMainExecutor(activity),
+                        new ImageAnalyzer(qr -> {
+                            if (loading) {
+                                return;
+                            }
+                            loading = true;
+
+                            startActivity(new Intent(this.getActivity(), ReceiptLoadActivity.class)
+                                    .putExtra("qr", qr));
+                        }));
 
                 cameraProvider.unbindAll();
 
@@ -69,7 +70,7 @@ public class ScanFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, ContextCompat.getMainExecutor(this.getActivity()));
+        }, ContextCompat.getMainExecutor(activity));
     }
 
 }

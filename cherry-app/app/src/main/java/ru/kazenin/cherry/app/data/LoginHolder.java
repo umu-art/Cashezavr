@@ -16,8 +16,8 @@ public class LoginHolder {
         try {
             var auth = Base64.getEncoder().encodeToString((username + ":" + password).getBytes());
 
-            Api.setAuth(auth);
-            Api.registerApi.tryAuth();
+            ApiHolder.setAuth(auth);
+            ApiHolder.registerApi.tryAuth();
             loggedInUser = new LoggedInUser(username, auth);
 
             return true;
@@ -40,8 +40,8 @@ public class LoginHolder {
             registerDto.setEmail(email);
             registerDto.setPhone(phone);
 
-            Api.registerApi.register(registerDto);
-            Api.setAuth(auth);
+            ApiHolder.registerApi.register(registerDto);
+            ApiHolder.setAuth(auth);
             loggedInUser = new LoggedInUser(username, auth);
 
             return true;

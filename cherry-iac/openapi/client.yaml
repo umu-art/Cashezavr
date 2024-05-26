@@ -1,0 +1,39 @@
+openapi: 3.0.3
+
+info:
+  title: Cherry client
+  description: Информация о пользователе
+  version: 1.0.0
+
+servers:
+  - url: 'wait.ru'
+
+paths:
+  /cherry/core/client/get:
+    get:
+      tags:
+        - client
+      description: Получение данных о себе
+      operationId: getMe
+      responses:
+        200:
+          description: Данные пользователя
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientDto"
+
+components:
+  schemas:
+    ClientDto:
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        actual_balance:
+          type: number
+
+  

@@ -5,34 +5,29 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import ru.kazenin.cherry.app.databinding.FragmentBillsBinding;
-import ru.kazenin.cherry.app.ui.bills.placeholder.PlaceholderContent.PlaceholderItem;
+import ru.kazenin.model.BillDto;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<PlaceholderItem> mValues;
+    private final List<BillDto> mValues;
 
-    public BillsRecyclerViewAdapter(List<PlaceholderItem> items) {
+    public BillsRecyclerViewAdapter(List<BillDto> items) {
         mValues = items;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         return new ViewHolder(FragmentBillsBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.dateView.setText(mValues.get(position).getCreated().toString());
+        holder.sumView.setText(mValues.get(position).getSum().toString());
+        holder.statusView.setText(mValues.get(position).getStatus());
     }
 
     @Override
@@ -41,19 +36,24 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public PlaceholderItem mItem;
+        public final TextView dateView;
+        public final TextView sumView;
+        public final TextView statusView;
+        public BillDto mItem;
 
         public ViewHolder(FragmentBillsBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            dateView = binding.date;
+            sumView = binding.sum;
+            statusView = binding.status;
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" +
+                    dateView.getText() + " " +
+                    sumView.getText() + " " +
+                    statusView.getText() + "'";
         }
     }
 }

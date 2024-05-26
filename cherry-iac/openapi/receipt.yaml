@@ -59,10 +59,17 @@ components:
       properties:
         qr:
           type: string
+        date:
+          type: string
+          format: date-time
+        shop:
+          type: string
         receiptItems:
           type: array
           items:
             $ref: "#/components/schemas/ReceiptItemDto"
+        returnSum:
+          type: number
 
     ReceiptItemDto:
       properties:

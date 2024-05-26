@@ -7,6 +7,7 @@
     <string name="title_qrscan">Сканировать</string>
     <string name="title_bills">Выплаты</string>
     <string name="title_profile">Профиль</string>
+    <string name="title_receipt">Чек</string>
     <string name="prompt_username">Логин</string>
     <string name="prompt_password">Пароль</string>
     <string name="prompt_email">Почта</string>

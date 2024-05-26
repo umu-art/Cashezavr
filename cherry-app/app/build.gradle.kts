@@ -18,6 +18,9 @@ android {
 
     packagingOptions {
         exclude("META-INF/DEPENDENCIES")
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 
     buildTypes {
@@ -37,7 +40,8 @@ android {
 
 dependencies {
     implementation(fileTree("libs"))
-    implementation("org.apache.httpcomponents:httpclient:4.5.13")
+    implementation("org.apache.httpcomponents:httpclient:4.5.14")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     implementation("com.google.zxing:core:3.3.0")
     implementation("androidx.camera:camera-camera2:1.3.3")

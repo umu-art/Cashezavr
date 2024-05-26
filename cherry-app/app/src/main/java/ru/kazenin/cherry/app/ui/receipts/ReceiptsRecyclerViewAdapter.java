@@ -5,34 +5,35 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import ru.kazenin.cherry.app.databinding.FragmentReceiptsBinding;
-import ru.kazenin.cherry.app.ui.receipts.placeholder.PlaceholderContent.PlaceholderItem;
+import ru.kazenin.model.ReceiptDto;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
- * TODO: Replace the implementation with code for your data type.
- */
+import static java.util.Objects.nonNull;
+
 public class ReceiptsRecyclerViewAdapter extends RecyclerView.Adapter<ReceiptsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<PlaceholderItem> mValues;
+    private final List<ReceiptDto> mValues;
 
-    public ReceiptsRecyclerViewAdapter(List<PlaceholderItem> items) {
+    public ReceiptsRecyclerViewAdapter(List<ReceiptDto> items) {
         mValues = items;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         return new ViewHolder(FragmentReceiptsBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        if (nonNull(mValues.get(position).getDate())) {
+            holder.dateView.setText(mValues.get(position).getDate().toString());
+        }
+        holder.shopView.setText(mValues.get(position).getShop());
+        if (nonNull(mValues.get(position).getReturnSum())) {
+            holder.sumView.setText(mValues.get(position).getReturnSum().toString());
+        }
     }
 
     @Override
@@ -41,19 +42,24 @@ public class ReceiptsRecyclerViewAdapter extends RecyclerView.Adapter<ReceiptsRe
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public PlaceholderItem mItem;
+        public final TextView dateView;
+        public final TextView shopView;
+        public final TextView sumView;
+        public ReceiptDto mItem;
 
         public ViewHolder(FragmentReceiptsBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            dateView = binding.date;
+            shopView = binding.shop;
+            sumView = binding.sum;
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" +
+                    dateView.getText() + " " +
+                    shopView.getText() + " " +
+                    sumView.getText() + "'";
         }
     }
 }

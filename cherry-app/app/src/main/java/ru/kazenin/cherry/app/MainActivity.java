@@ -7,7 +7,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import lombok.var;
-import ru.kazenin.cherry.app.data.Api;
+import ru.kazenin.cherry.app.data.DataHolder;
+import ru.kazenin.cherry.app.data.ApiHolder;
 import ru.kazenin.cherry.app.data.LoginHolder;
 import ru.kazenin.cherry.app.databinding.ActivityMainBinding;
 import ru.kazenin.cherry.app.ui.login.LoginActivity;
@@ -22,11 +23,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Api.init();
+        ApiHolder.init();
+        DataHolder.init();
 
         if (isNull(LoginHolder.loggedInUser)) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());

@@ -28,12 +28,18 @@ import java.util.List;
 @Table(name = "receipt")
 public class ReceiptEntity extends BaseEntity {
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_username", referencedColumnName = "username", nullable = false)
     private ClientEntity client;
 
     @Column(name = "qr", unique = true, nullable = false)
     private String qr;
+
+    @Column(name = "date")
+    private OffsetDateTime date;
+
+    @Column(name = "shop")
+    private String shop;
 
     @OneToMany(mappedBy = "receiptEntity", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
