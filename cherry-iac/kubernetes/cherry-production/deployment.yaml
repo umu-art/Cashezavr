@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cherry-production
+  namespace: cherry
+  labels:
+    app: cherry-production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cherry-production
+  template:
+    metadata:
+      name: cherry-production
+      labels:
+        app: cherry-production
+    spec:
+      containers:
+        - name: cherry-production
+          image: vikazeni/cherry-production:latest
+          imagePullPolicy: Always
+      restartPolicy: Always
+      

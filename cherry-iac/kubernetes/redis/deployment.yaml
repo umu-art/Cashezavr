@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: cherry
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      name: redis
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:alpine
+          command:
+            - redis-server --requirepass cherry
+          imagePullPolicy: Always
+          env:
+            - name: REDIS_REPLICATION_MODE
+              value: master
+      restartPolicy: Always
+      

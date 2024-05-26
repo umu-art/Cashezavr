@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cherry-outside
+  namespace: cherry
+  labels:
+    app: cherry-outside
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cherry-outside
+  template:
+    metadata:
+      name: cherry-outside
+      labels:
+        app: cherry-outside
+    spec:
+      containers:
+        - name: cherry-outside
+          image: vikazeni/cherry-outside:latest
+          imagePullPolicy: Always
+      restartPolicy: Always
+      
