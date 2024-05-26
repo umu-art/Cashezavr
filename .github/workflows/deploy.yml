@@ -23,7 +23,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '21'
-        distribution: 'openjdk'
+        distribution: 'liberica'
         cache: maven
 
     - name: cd to cherry-core
