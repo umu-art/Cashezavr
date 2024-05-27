@@ -100,11 +100,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set the Kubernetes context
-        uses: azure/k8s-set-context@v3.0
+        uses: azure/k8s-set-context@v4
         with:
-          method: service-account
-          k8s-url: ${{ secrets.KUBEURL }}
-          k8s-secret: ${{ secrets.KUBESECRET }}
+           method: kubeconfig
+           kubeconfig: ${{ secrets.KUBESECRET }}
+           context: kubernetes-admin@kubernetes
           
       - name: Deploy cherry-core
         run: kubectl rollout restart deployment/cherry-core -n cherry
