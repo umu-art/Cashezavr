@@ -109,7 +109,7 @@ public class ReceiptServiceImpl implements ReceiptService {
 
     @Override
     public List<ReceiptDto> getAllReceipts() {
-        var entities = receiptJpa.findAllByClient(contextHolder.getCurrentClient());
+        var entities = receiptJpa.findAllByClientOrderByDate(contextHolder.getCurrentClient());
         return receiptMapper.toDto(entities);
     }
 }
