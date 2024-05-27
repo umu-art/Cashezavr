@@ -3,7 +3,9 @@ package ru.kazenin.cherry.outside.service.impl;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 import ru.kazenin.cherry.common.entity.ReceiptEntity;
 import ru.kazenin.cherry.common.entity.ReceiptItemEntity;
@@ -12,7 +14,9 @@ import ru.kazenin.cherry.outside.service.FinanceService;
 import ru.kazenin.cherry.outside.service.OutsideAuthService;
 import ru.kazenin.cherry.outside.service.ReceiptLoadService;
 
+import java.text.ParseException;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -39,7 +43,10 @@ public class ReceiptLoadServiceImpl implements ReceiptLoadService {
         }
 
         fillReceiptEntity(receipt);
-        financeService.processReceipt(receipt);
+
+        if (!receipt.isLoadLock()) {
+            financeService.processReceipt(receipt);
+        }
 
         receiptJpa.saveAndFlush(receipt);
     }
@@ -50,14 +57,30 @@ public class ReceiptLoadServiceImpl implements ReceiptLoadService {
 
     /**
      * Наполняет сущность чека данными из ФНС и проставляет дату выгрузки.
+     * Проставляет loadLock если выгрузка провалилась из-за битых данных.
      *
      * @param receipt сущность для наполнения
      */
     private void fillReceiptEntity(ReceiptEntity receipt) {
-        var fnsReceiptUuid = getFnsReceiptUuid(receipt.getQr());
-        var fnsReceiptRow = getFnsReceiptRaw(fnsReceiptUuid);
+        JsonNode fnsReceiptRow;
+
+        try {
+            var fnsReceiptUuid = getFnsReceiptUuid(receipt.getQr());
+            fnsReceiptRow = getFnsReceiptRaw(fnsReceiptUuid);
+        } catch (HttpClientErrorException e) {
+            log.error("Ошибка загрузки: ", e);
+            receipt.setLoadLock(true);
+            return;
+        }
 
         receipt.setReceiptItems(parseReceiptItems(fnsReceiptRow, receipt));
+        receipt.setShop(fnsReceiptRow.get("organization").get("name").asText());
+        try {
+            receipt.setDate(DateUtils.parseDate(
+                    fnsReceiptRow.get("operation").get("date").asText(), "yyyy-MM-dd'T'HH:mm")
+                    .toInstant().atOffset(ZoneOffset.UTC));
+        } catch (ParseException ignored) {
+        }
         receipt.setLoaded(OffsetDateTime.now());
     }
 
@@ -90,11 +113,7 @@ public class ReceiptLoadServiceImpl implements ReceiptLoadService {
                 .header("sessionId", outsideAuthService.getSessionId())
                 .retrieve()
                 .toEntity(JsonNode.class)
-                .getBody()
-                .get("ticket")
-                .get("document")
-                .get("receipt")
-                .get("items");
+                .getBody();
     }
 
     /**
@@ -106,7 +125,11 @@ public class ReceiptLoadServiceImpl implements ReceiptLoadService {
     private List<ReceiptItemEntity> parseReceiptItems(JsonNode raw, ReceiptEntity receipt) {
         var result = new ArrayList<ReceiptItemEntity>();
 
-        for (JsonNode itemRaw : raw) {
+        for (JsonNode itemRaw : raw
+                .get("ticket")
+                .get("document")
+                .get("receipt")
+                .get("items")) {
             ReceiptItemEntity itemDto = new ReceiptItemEntity();
             itemDto.setName(itemRaw.get("name").asText());
             itemDto.setCount(itemRaw.get("quantity").asInt());

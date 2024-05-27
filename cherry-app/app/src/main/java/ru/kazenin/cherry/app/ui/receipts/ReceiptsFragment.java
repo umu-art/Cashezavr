@@ -44,7 +44,7 @@ public class ReceiptsFragment extends Fragment {
             RecyclerView recyclerView = (RecyclerView) view;
             DataHolder.fillReceiptDtosIfNull();
             activity.runOnUiThread(() ->
-                    recyclerView.setAdapter(new ReceiptsRecyclerViewAdapter(DataHolder.receiptDtos)));
+                    recyclerView.setAdapter(new ReceiptsRecyclerViewAdapter(DataHolder.receiptDtos, activity)));
         }
     }
 

@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/cherry/register").permitAll()
                         .requestMatchers("/cherry/try").authenticated()
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/actuator").permitAll()
                         .anyRequest().denyAll())
                 .authenticationProvider(authenticationProvider)

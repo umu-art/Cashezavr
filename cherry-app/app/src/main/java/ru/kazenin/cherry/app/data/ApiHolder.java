@@ -12,7 +12,7 @@ public class ApiHolder {
     public static final ClientApi clientApi = new ClientApi();
     public static final BillApi billApi = new BillApi();
 
-    private static final String basePath = "http://192.168.120.27:3001";
+    private static final String basePath = "http://cherry.umu-art.ru/";
     private static final String AUTHORIZATION = "Authorization";
 
     public static void init() {

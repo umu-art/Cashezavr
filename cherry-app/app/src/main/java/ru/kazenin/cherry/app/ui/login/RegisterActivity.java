@@ -10,6 +10,9 @@ import ru.kazenin.cherry.app.MainActivity;
 import ru.kazenin.cherry.app.data.LoginHolder;
 import ru.kazenin.cherry.app.databinding.ActivityRegisterBinding;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class RegisterActivity extends AppCompatActivity {
 
     @Override
@@ -26,19 +29,23 @@ public class RegisterActivity extends AppCompatActivity {
         final Button registerButton = binding.register;
         final Button goLoginButton = binding.goLogin;
 
-        registerButton.setOnClickListener(v -> {
-            var registerSuccess = LoginHolder.registerAttempt(
-                    usernameEditText.getText().toString(),
-                    passwordEditText.getText().toString(),
-                    emailEditText.getText().toString(),
-                    phoneEditText.getText().toString());
-            if (registerSuccess) {
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            } else {
+        var activity = this;
 
+        registerButton.setOnClickListener(v -> new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                var registerSuccess = LoginHolder.registerAttempt(
+                        usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString(),
+                        emailEditText.getText().toString(),
+                        phoneEditText.getText().toString());
+                if (registerSuccess) {
+                    startActivity(new Intent(activity, MainActivity.class));
+                } else {
+
+                }
             }
-        });
+        }, 0));
 
         goLoginButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, LoginActivity.class);

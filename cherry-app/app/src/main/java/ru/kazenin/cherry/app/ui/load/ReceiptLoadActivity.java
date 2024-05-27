@@ -13,11 +13,11 @@ import ru.kazenin.cherry.app.data.ApiHolder;
 import ru.kazenin.cherry.app.data.DataHolder;
 import ru.kazenin.cherry.app.ui.receipt.ReceiptActivity;
 import ru.kazenin.cherry.app.ui.scan.ScanFragment;
+import ru.kazenin.model.ReceiptDto;
 import ru.kazenin.model.ReceiptRequestDto;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.UUID;
 
 public class ReceiptLoadActivity extends AppCompatActivity {
 
@@ -39,7 +39,7 @@ public class ReceiptLoadActivity extends AppCompatActivity {
     private void loadReceipt(String qr) {
         try {
             var receiptLoadRequest = new ReceiptRequestDto();
-            receiptLoadRequest.setQr(UUID.randomUUID().toString() /*QrHolder.lastQr*/);
+            receiptLoadRequest.setQr(qr);
             DataHolder.lastReceipt = ApiHolder.receiptApi.loadReceipt(receiptLoadRequest);
             runOnUiThread(() ->
                     startActivity(new Intent(this, ReceiptActivity.class)));
@@ -47,7 +47,9 @@ public class ReceiptLoadActivity extends AppCompatActivity {
             if (e.getCode() == 409) {
 
             } else if (e.getCode() == 201) {
-
+                DataHolder.lastReceipt = new ReceiptDto();
+                runOnUiThread(() ->
+                        startActivity(new Intent(this, ReceiptActivity.class)));
             } else {
                 Log.e("receipt load", "error while loading: ", e);
             }

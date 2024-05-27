@@ -41,8 +41,10 @@ android {
 dependencies {
     implementation(fileTree("libs"))
     implementation("org.apache.httpcomponents:httpclient:4.5.14")
+    implementation("org.apache.httpcomponents:httpmime:4.5.14")
     implementation("com.google.code.gson:gson:2.10.1")
 
+    implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("com.google.zxing:core:3.3.0")
     implementation("androidx.camera:camera-camera2:1.3.3")
     implementation("androidx.camera:camera-lifecycle:1.3.3")
