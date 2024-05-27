@@ -44,7 +44,7 @@ management:
             requests: true
   zipkin:
     tracing:
-      endpoint: http://tempo.monitoring/api/v2/spans
+      endpoint: http://tempo.monitoring:9411/api/v2/spans
 
 logging:
   level:
