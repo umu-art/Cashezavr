@@ -15,5 +15,5 @@ public interface ReceiptJpa extends JpaRepository<ReceiptEntity, UUID> {
 
     int countByUuidAndLoadedNotNull(UUID uuid);
 
-    List<ReceiptEntity> findAllByClient(ClientEntity user);
+    List<ReceiptEntity> findAllByClientOrderByDate(ClientEntity user);
 }
