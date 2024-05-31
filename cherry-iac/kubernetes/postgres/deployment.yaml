@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: dockerhub.timeweb.cloud/postgresql:latest
+          image: dockerhub.timeweb.cloud/postgres:latest
           imagePullPolicy: Always
           env:
             - name: POSTGRES_DB
