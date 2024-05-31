@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: dockerhub.timeweb.cloud/bitnami/postgresql:latest
+          image: dockerhub.timeweb.cloud/postgresql:latest
           imagePullPolicy: Always
           env:
             - name: POSTGRES_DB
@@ -27,5 +27,13 @@ spec:
               value: cherry
             - name: POSTGRES_PASSWORD
               value: cherry
+          volumeMounts:
+            - mountPath: /var/lib/postgres/data
+              name: db-storage
+
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+
       restartPolicy: Always
-      

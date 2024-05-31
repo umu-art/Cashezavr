@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: redis
-          image: dockerhub.timeweb.cloud/redislabs/redis:latest
+          image: dockerhub.timeweb.cloud/redis:latest
           command:
             - redis-server
           args:
