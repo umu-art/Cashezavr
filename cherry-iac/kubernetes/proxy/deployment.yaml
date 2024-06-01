@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: proxy
-          image: ghcr.io/umu-art/proxy:latest
+          image: ghcr.io/umu-art/proxy:master
           imagePullPolicy: Always
 
       imagePullSecrets:
