@@ -20,5 +20,9 @@ spec:
         - name: loki
           image: ghcr.io/umu-art/loki:master
           imagePullPolicy: Always
+
+      imagePullSecrets:
+        - name: github-container-registry
+
       restartPolicy: Always
       

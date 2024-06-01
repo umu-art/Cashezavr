@@ -20,5 +20,9 @@ spec:
         - name: grafana
           image: ghcr.io/umu-art/grafana:master
           imagePullPolicy: Always
+
+      imagePullSecrets:
+        - name: github-container-registry
+
       restartPolicy: Always
       

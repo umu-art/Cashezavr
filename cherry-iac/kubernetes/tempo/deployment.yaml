@@ -20,5 +20,9 @@ spec:
         - name: tempo
           image: ghcr.io/umu-art/tempo:master
           imagePullPolicy: Always
+
+      imagePullSecrets:
+        - name: github-container-registry
+
       restartPolicy: Always
       
