@@ -47,7 +47,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Extract metadata for ${{ matrix.app }}
-      id: meta-core
+      id: meta
       uses: docker/metadata-action@v5.5.1
       with:
         images: ${{ env.REGISTRY }}/${{ github.actor }}/${{ matrix.app }}
@@ -58,8 +58,8 @@ jobs:
         context: ./${{ matrix.app }}
         file: ./${{ matrix.app }}/Dockerfile
         push: true
-        tags: ${{ steps.meta-core.outputs.tags }}
-        labels: ${{ steps.meta-core.outputs.labels }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
 
   kube-java-update:
     needs: [ build-java-images ]
@@ -104,10 +104,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata for ${{ matrix.app }}
-        id: meta-core
+        id: meta
         uses: docker/metadata-action@v5.5.1
         with:
-          images: ${{ env.REGISTRY }}/${{ github.actor }}/${{ matrix.app }}
+          images: ${{ env.REGISTRY }}/${{ github.actor }}/cherry-${{ matrix.app }}
 
       - name: Build and push Docker image for ${{ matrix.app }}
         uses: docker/build-push-action@v5.3.0
@@ -115,8 +115,8 @@ jobs:
           context: ./cherry-iac/images/${{ matrix.app }}
           file: ./cherry-iac/images/${{ matrix.app }}/Dockerfile
           push: true
-          tags: ${{ steps.meta-core.outputs.tags }}
-          labels: ${{ steps.meta-core.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
   kube-monitoring-update:
     needs: [ build-monitoring-images ]
