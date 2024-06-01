@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import ru.kazenin.cherry.outside.service.OutsideAuthService;
@@ -69,5 +70,26 @@ public class OutsideAuthServiceImpl implements OutsideAuthService {
         }
 
         return sessionId;
+    }
+
+    @Scheduled(fixedDelay = 15 * 60 * 1000)
+    public void refreshToken() {
+        if (sessionId == null) {
+            return;
+        }
+
+        try {
+            var result = restClient.post()
+                    .uri("/v2/mobile/users/refresh")
+                    .body("{\"client_secret\": \"" + clientSecret + "\", " +
+                            "\"refresh_token\": \"" + refreshToken + "\"}\n")
+                    .retrieve()
+                    .body(JsonNode.class);
+
+            sessionId = result.get("sessionId").asText();
+            refreshToken = result.get("refresh_token").asText();
+        } catch (Exception e) {
+            log.error("Ошибка обновления токена", e);
+        }
     }
 }
