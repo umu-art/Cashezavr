@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loki
+  namespace: cherry
+  labels:
+    app: loki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loki
+  template:
+    metadata:
+      name: loki
+      labels:
+        app: loki
+    spec:
+      containers:
+        - name: loki
+          image: ghcr.io/umu-art/loki:latest
+          imagePullPolicy: Always
+      restartPolicy: Always
+      

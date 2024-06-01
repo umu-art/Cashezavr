@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tempo
+  namespace: cherry
+  labels:
+    app: tempo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tempo
+  template:
+    metadata:
+      name: tempo
+      labels:
+        app: tempo
+    spec:
+      containers:
+        - name: tempo
+          image: ghcr.io/umu-art/tempo:latest
+          imagePullPolicy: Always
+      restartPolicy: Always
+      
