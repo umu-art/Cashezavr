@@ -27,7 +27,7 @@ jobs:
         run: (cd cherry-iac/openapi; chmod 777 ./build-core-api.sh;  ./build-core-api.sh)
 
       - name: Build with Maven
-        run: mvn -B test --file pom.xml
+        run: mvn -B test -T1C --file pom.xml
 
 
   build-java-images:
@@ -58,7 +58,7 @@ jobs:
       run: (cd cherry-iac/openapi; chmod 777 ./build-core-api.sh;  ./build-core-api.sh)
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package -T1C --file pom.xml
       
     - name: Log in to the Container registry
       uses: docker/login-action@v3.1.0

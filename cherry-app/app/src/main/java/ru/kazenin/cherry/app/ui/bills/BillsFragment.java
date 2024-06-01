@@ -1,12 +1,13 @@
 package ru.kazenin.cherry.app.ui.bills;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
-import lombok.var;
+import ru.kazenin.cherry.app.BillRequestActivity;
 import ru.kazenin.cherry.app.data.DataHolder;
 import ru.kazenin.cherry.app.databinding.FragmentBillsListBinding;
 
@@ -17,6 +18,8 @@ import java.util.TimerTask;
 public class BillsFragment extends Fragment {
 
     private final Timer timer = new Timer();
+    private Activity parentActivity;
+    private FragmentBillsListBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,21 +29,32 @@ public class BillsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        var binding = FragmentBillsListBinding.inflate(inflater, container, false);
-        var activity = this.getActivity();
+        binding = FragmentBillsListBinding.inflate(inflater, container, false);
+        parentActivity = this.getActivity();
 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                setBills(activity, binding);
+                setBills(parentActivity, binding);
             }
         }, 0, DataHolder.updatePeriod);
 
         binding.billCall.setOnClickListener((a) -> {
-            // TODO: make bill
+            startActivity(new Intent(this.getActivity(), BillRequestActivity.class));
         });
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                setBills(parentActivity, binding);
+            }
+        }, 0);
     }
 
     private void setBills(Activity activity, FragmentBillsListBinding binding) {

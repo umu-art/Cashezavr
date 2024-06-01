@@ -31,8 +31,6 @@ public class ScanFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         var activity = this.getActivity();
-        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, 20);
-
         bindCamera(activity);
 
         return inflater.inflate(R.layout.fragment_scan, container, false);

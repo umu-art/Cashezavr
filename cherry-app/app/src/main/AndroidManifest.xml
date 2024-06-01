@@ -19,6 +19,9 @@
             android:theme="@style/Theme.Cherryapp"
             tools:targetApi="31">
         <activity
+                android:name=".BillRequestActivity"
+                android:exported="false"/>
+        <activity
                 android:name=".ui.receipt.ReceiptActivity"
                 android:exported="false"/>
         <activity

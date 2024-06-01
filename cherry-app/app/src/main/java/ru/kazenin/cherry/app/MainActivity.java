@@ -1,14 +1,15 @@
 package ru.kazenin.cherry.app;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import lombok.var;
-import ru.kazenin.cherry.app.data.DataHolder;
 import ru.kazenin.cherry.app.data.ApiHolder;
+import ru.kazenin.cherry.app.data.DataHolder;
 import ru.kazenin.cherry.app.data.LoginHolder;
 import ru.kazenin.cherry.app.databinding.ActivityMainBinding;
 import ru.kazenin.cherry.app.ui.login.LoginActivity;
@@ -22,11 +23,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 20);
 
         ApiHolder.init();
         DataHolder.init();
+        LoginHolder.tryLoadFromMem(this);
 
-        if (isNull(LoginHolder.loggedInUser)) {
+        if (isNull(LoginHolder.loggedInUser) || isNull(LoginHolder.loggedInUser.getAuth())) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }

@@ -1,6 +1,7 @@
 package ru.kazenin.cherry.app.ui.profile;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import lombok.var;
 import ru.kazenin.cherry.app.data.DataHolder;
+import ru.kazenin.cherry.app.data.LoginHolder;
 import ru.kazenin.cherry.app.databinding.FragmentProfileBinding;
+import ru.kazenin.cherry.app.ui.login.LoginActivity;
 
 import java.math.RoundingMode;
 import java.util.Timer;
@@ -35,7 +38,12 @@ public class ProfileFragment extends Fragment {
 
 
         binding.logout.setOnClickListener((a) -> {
-            // TODO: logout
+            LoginHolder.editor.putString("username", null);
+            LoginHolder.editor.putString("auth", null);
+            LoginHolder.editor.commit();
+
+            startActivity(new Intent(this.getActivity(), LoginActivity.class));
+            this.getActivity().finish();
         });
 
 

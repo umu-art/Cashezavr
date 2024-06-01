@@ -4,9 +4,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import ru.kazenin.cherry.app.databinding.FragmentBillsBinding;
 import ru.kazenin.model.BillDto;
 
+import java.math.RoundingMode;
 import java.util.List;
 
 public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
@@ -25,9 +27,11 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.dateView.setText(mValues.get(position).getCreated().toString());
-        holder.sumView.setText(mValues.get(position).getSum().toString());
-        holder.statusView.setText(mValues.get(position).getStatus());
+        holder.dateView.setText("Время запроса: " +
+                DateFormatUtils.format(mValues.get(position).getCreated(), "HH:mm dd.MM.yyyy"));
+        holder.sumView.setText("Сумма: " + mValues.get(position).getSum()
+                .setScale(2, RoundingMode.HALF_EVEN).toString() + " руб.");
+        holder.statusView.setText("Статус: " + mValues.get(position).getStatus());
     }
 
     @Override

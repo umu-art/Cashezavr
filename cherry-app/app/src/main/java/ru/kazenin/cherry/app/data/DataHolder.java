@@ -61,6 +61,14 @@ public class DataHolder {
         }
     }
 
+    public static void recallBills() {
+        try {
+            bills = ApiHolder.billApi.getAllBills();
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void fillReceiptDtosIfNull() {
         if (isNull(receiptDtos)) {
             try {
@@ -78,6 +86,14 @@ public class DataHolder {
             } catch (ApiException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public static void recallClient() {
+        try {
+            clientDto = ApiHolder.clientApi.getMe();
+        } catch (ApiException e) {
+            e.printStackTrace();
         }
     }
 }
