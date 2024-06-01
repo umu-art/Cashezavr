@@ -26,16 +26,23 @@ spec:
           image: ghcr.io/umu-art/cherry-production:master
           imagePullPolicy: Always
 
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 3003
+              initialDelaySeconds: 15
+              periodSeconds: 10
+              failureThreshold: 4
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 3003
+              initialDelaySeconds: 15
+              periodSeconds: 10
+              failureThreshold: 4
+
       imagePullSecrets:
         - name: github-container-registry
 
-      livenessProbe:
-        httpGet:
-          path: /actuator/health/liveness
-          port: 3003
-          initialDelaySeconds: 15
-          periodSeconds: 10
-          failureThreshold: 4
-
       restartPolicy: Always
-      
