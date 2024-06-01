@@ -41,21 +41,27 @@ public class ReceiptLoadActivity extends AppCompatActivity {
             var receiptLoadRequest = new ReceiptRequestDto();
             receiptLoadRequest.setQr(qr);
             DataHolder.lastReceipt = ApiHolder.receiptApi.loadReceipt(receiptLoadRequest);
-            runOnUiThread(() ->
-                    startActivity(new Intent(this, ReceiptActivity.class)));
+            runOnUiThread(() -> {
+                startActivity(new Intent(this, ReceiptActivity.class));
+                finish();
+            });
         } catch (ApiException e) {
             if (e.getCode() == 409) {
 
             } else if (e.getCode() == 201) {
                 DataHolder.lastReceipt = new ReceiptDto();
-                runOnUiThread(() ->
-                        startActivity(new Intent(this, ReceiptActivity.class)));
+                runOnUiThread(() -> {
+                    startActivity(new Intent(this, ReceiptActivity.class));
+                    finish();
+                });
             } else {
                 Log.e("receipt load", "error while loading: ", e);
             }
 
-            runOnUiThread(() ->
-                    startActivity(new Intent(this, MainActivity.class)));
+            runOnUiThread(() -> {
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            });
         }
         ScanFragment.loading = false;
         finish();

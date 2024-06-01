@@ -41,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
                         phoneEditText.getText().toString());
                 if (registerSuccess) {
                     startActivity(new Intent(activity, MainActivity.class));
+                    finish();
                 } else {
 
                 }
@@ -50,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         goLoginButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         });
     }
 }

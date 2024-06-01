@@ -38,7 +38,7 @@ public class ReceiptsRecyclerViewAdapter extends RecyclerView.Adapter<ReceiptsRe
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         if (isNull(mValues.get(position).getDate())) {
-            holder.self.setBackgroundResource(R.color.purple_200);
+            holder.self.setBackgroundResource(R.color.black);
             holder.shopView.setText("Чек загружается");
             return;
         }

@@ -6,11 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import lombok.var;
-import ru.kazenin.cherry.app.R;
 import ru.kazenin.cherry.app.data.DataHolder;
+import ru.kazenin.cherry.app.databinding.FragmentBillsListBinding;
 
+import java.math.RoundingMode;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,26 +26,31 @@ public class BillsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bills_list, container, false);
+        var binding = FragmentBillsListBinding.inflate(inflater, container, false);
         var activity = this.getActivity();
 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                setBills(activity, view);
+                setBills(activity, binding);
             }
         }, 0, DataHolder.updatePeriod);
 
-        return view;
+        binding.billCall.setOnClickListener((a) -> {
+            // TODO: make bill
+        });
+
+        return binding.getRoot();
     }
 
-    private void setBills(Activity activity, View view) {
-        if (view instanceof RecyclerView) {
-            RecyclerView recyclerView = (RecyclerView) view;
-            DataHolder.fillBillsIfNull();
-            activity.runOnUiThread(() ->
-                    recyclerView.setAdapter(new BillsRecyclerViewAdapter(DataHolder.bills)));
-        }
+    private void setBills(Activity activity, FragmentBillsListBinding binding) {
+        DataHolder.fillBillsIfNull();
+        DataHolder.fillClientDtoIfNull();
+        activity.runOnUiThread(() -> {
+            binding.balance.setText("Доступно: " + DataHolder.clientDto.getActualBalance()
+                    .setScale(2, RoundingMode.HALF_EVEN).toString());
+            binding.list.setAdapter(new BillsRecyclerViewAdapter(DataHolder.bills));
+        });
     }
 
     @Override

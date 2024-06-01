@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import lombok.var;
-import ru.kazenin.cherry.app.R;
 import ru.kazenin.cherry.app.data.DataHolder;
+import ru.kazenin.cherry.app.databinding.FragmentReceiptsListBinding;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,26 +26,23 @@ public class ReceiptsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_receipts_list, container, false);
+        var binding = FragmentReceiptsListBinding.inflate(inflater, container, false);
         var activity = this.getActivity();
 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                setReceipts(activity, view);
+                setReceipts(activity, binding.list);
             }
         }, 0, DataHolder.updatePeriod);
 
-        return view;
+        return binding.getRoot();
     }
 
-    private void setReceipts(Activity activity, View view) {
-        if (view instanceof RecyclerView) {
-            RecyclerView recyclerView = (RecyclerView) view;
-            DataHolder.fillReceiptDtosIfNull();
-            activity.runOnUiThread(() ->
-                    recyclerView.setAdapter(new ReceiptsRecyclerViewAdapter(DataHolder.receiptDtos, activity)));
-        }
+    private void setReceipts(Activity activity, RecyclerView view) {
+        DataHolder.fillReceiptDtosIfNull();
+        activity.runOnUiThread(() ->
+                view.setAdapter(new ReceiptsRecyclerViewAdapter(DataHolder.receiptDtos, activity)));
     }
 
     @Override

@@ -29,12 +29,9 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
         final Button goRegisterButton = binding.goRegister;
-        final ProgressBar loadingProgressBar = binding.loading;
         var activity = this;
 
         loginButton.setOnClickListener(v -> {
-            loadingProgressBar.setVisibility(View.VISIBLE);
-
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -42,19 +39,21 @@ public class LoginActivity extends AppCompatActivity {
                             passwordEditText.getText().toString());
                     if (loginSuccess) {
                         startActivity(new Intent(activity, MainActivity.class));
+                        finish();
                     } else {
-                        usernameEditText.setError(getString(R.string.login_failed));
-                        passwordEditText.setError(getString(R.string.login_failed));
+                        runOnUiThread(() -> {
+                            usernameEditText.setError(getString(R.string.login_failed));
+                            passwordEditText.setError(getString(R.string.login_failed));
+                        });
                     }
                 }
             }, 0);
-
-            loadingProgressBar.setVisibility(View.INVISIBLE);
         });
 
         goRegisterButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
+            finish();
         });
     }
 }

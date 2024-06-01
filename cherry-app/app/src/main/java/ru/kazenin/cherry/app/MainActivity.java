@@ -34,18 +34,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        var navView = findViewById(R.id.nav_view);
-
-        var appBarConfiguration =
-                new AppBarConfiguration.Builder(
-                        R.id.navigation_qrscan,
-                        R.id.navigation_profile,
-                        R.id.navigation_bills,
-                        R.id.navigation_receipts,
-                        R.id.navigation_support)
-                        .build();
         var navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
