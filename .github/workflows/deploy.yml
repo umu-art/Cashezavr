@@ -82,9 +82,15 @@ jobs:
 
   build-monitoring-images:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         app: [grafana, loki, tempo, prometheus]
+
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
 
     steps:
       - name: Checkout
