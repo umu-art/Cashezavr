@@ -21,6 +21,15 @@ spec:
           image: ghcr.io/umu-art/grafana:master
           imagePullPolicy: Always
 
+          volumeMounts:
+            - mountPath: /var/lib/grafana
+              name: grafana-storage
+
+      volumes:
+        - name: grafana-storage
+          persistentVolumeClaim:
+            claimName: grafana-pvc
+
       imagePullSecrets:
         - name: github-container-registry
 
