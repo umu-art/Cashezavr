@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: ghcr.io/umu-art/grafana
+          image: ghcr.io/umu-art/grafana:master
           imagePullPolicy: Always
       restartPolicy: Always
       

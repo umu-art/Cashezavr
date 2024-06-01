@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: loki
-          image: ghcr.io/umu-art/loki:latest
+          image: ghcr.io/umu-art/loki:master
           imagePullPolicy: Always
       restartPolicy: Always
       

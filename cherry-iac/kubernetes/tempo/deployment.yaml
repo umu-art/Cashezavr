@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: tempo
-          image: ghcr.io/umu-art/tempo:latest
+          image: ghcr.io/umu-art/tempo:master
           imagePullPolicy: Always
       restartPolicy: Always
       
