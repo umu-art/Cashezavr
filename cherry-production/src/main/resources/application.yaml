@@ -32,8 +32,6 @@ management:
   health:
     livenessstate:
       enabled: true
-    readinessstate:
-      enabled: true
   prometheus:
     metrics:
       export:

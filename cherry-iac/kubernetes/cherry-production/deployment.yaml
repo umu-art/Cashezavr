@@ -37,13 +37,5 @@ spec:
           periodSeconds: 10
           failureThreshold: 4
 
-      readinessProbe:
-        httpGet:
-          path: /actuator/health/readiness
-          port: 3003
-          initialDelaySeconds: 15
-          periodSeconds: 10
-          failureThreshold: 4
-
       restartPolicy: Always
       
