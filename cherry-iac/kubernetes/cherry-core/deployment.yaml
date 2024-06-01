@@ -32,7 +32,7 @@ spec:
               port: 3001
             initialDelaySeconds: 15
             periodSeconds: 10
-            failureThreshold: 4
+            failureThreshold: 15
 
           readinessProbe:
             httpGet:
@@ -40,7 +40,7 @@ spec:
               port: 3001
             initialDelaySeconds: 15
             periodSeconds: 10
-            failureThreshold: 4
+            failureThreshold: 15
 
       imagePullSecrets:
         - name: github-container-registry
