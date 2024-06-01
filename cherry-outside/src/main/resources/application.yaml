@@ -50,7 +50,14 @@ management:
         include: health,info,prometheus,metrics
   endpoint:
     health:
+      probes:
+        enabled: true
       show-details: always
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
   prometheus:
     metrics:
       export:

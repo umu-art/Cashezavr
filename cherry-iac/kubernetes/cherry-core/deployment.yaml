@@ -1,26 +1,49 @@
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: cherry-core
   namespace: cherry
   labels:
     app: cherry-core
+
 spec:
   replicas: 2
+
   selector:
     matchLabels:
       app: cherry-core
+
   template:
     metadata:
       name: cherry-core
       labels:
         app: cherry-core
+
     spec:
       containers:
         - name: cherry-core
           image: ghcr.io/umu-art/cherry-core:master
           imagePullPolicy: Always
+
       imagePullSecrets:
         - name: github-container-registry
+
+      livenessProbe:
+        httpGet:
+          path: /actuator/health/liveness
+          port: 3001
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          failureThreshold: 4
+
+      readinessProbe:
+        httpGet:
+          path: /actuator/health/readiness
+          port: 3001
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          failureThreshold: 4
+
       restartPolicy: Always
       
