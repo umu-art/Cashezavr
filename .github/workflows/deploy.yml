@@ -193,8 +193,8 @@ jobs:
       - name: Build and push Docker image for ${{ matrix.app }}
         uses: docker/build-push-action@v5.3.0
         with:
-          context: ./utils/${{ matrix.app }}
-          file: ./utils/${{ matrix.app }}/Dockerfile
+          context: ./cherry-iac/utils/${{ matrix.app }}
+          file: ./cherry-iac/utils/${{ matrix.app }}/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
