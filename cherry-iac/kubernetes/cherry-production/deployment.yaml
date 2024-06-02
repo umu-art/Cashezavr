@@ -29,18 +29,18 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 3003
-            initialDelaySeconds: 15
+              port: 3001
+            initialDelaySeconds: 40
             periodSeconds: 10
-            failureThreshold: 15
+            failureThreshold: 8
 
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 3003
-            initialDelaySeconds: 15
+              port: 3001
+            initialDelaySeconds: 40
             periodSeconds: 10
-            failureThreshold: 15
+            failureThreshold: 8
 
           resources:
             requests:

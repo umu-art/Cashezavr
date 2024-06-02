@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cherry-load-recovery
+  namespace: cherry
+spec:
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: cherry-load-recovery
+              image: ghcr.io/umu-art/cherry-load-recovery:master
+              imagePullPolicy: Always
+
+          imagePullSecrets:
+            - name: github-container-registry
+
+          restartPolicy: Never

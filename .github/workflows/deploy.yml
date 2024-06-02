@@ -5,6 +5,14 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  on:
+    workflow_dispatch:
+      inputs:
+        environment:
+          description: 'Environment to run tests against'
+          type: environment
+          required: true
+
 
 env:
   REGISTRY: ghcr.io
@@ -166,7 +174,7 @@ jobs:
 
     strategy:
       matrix:
-        app: [ proxy ]
+        app: [ cherry-load-recovery ]
 
     permissions:
       contents: read
@@ -193,29 +201,8 @@ jobs:
       - name: Build and push Docker image for ${{ matrix.app }}
         uses: docker/build-push-action@v5.3.0
         with:
-          context: ./cherry-iac/images/${{ matrix.app }}
-          file: ./cherry-iac/images/${{ matrix.app }}/Dockerfile
+          context: ./utils/${{ matrix.app }}
+          file: ./utils/${{ matrix.app }}/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-  kube-utils-update:
-    needs: [ build-utils-images ]
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        app: [ proxy ]
-
-    steps:
-      - name: Set the Kubernetes context
-        uses: azure/k8s-set-context@v4
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBESECRET }}
-          context: kubernetes-admin@kubernetes
-
-      - name: Deploy ${{ matrix.app }}
-        run: kubectl rollout restart deployment/${{ matrix.app }} -n cherry
-
-
