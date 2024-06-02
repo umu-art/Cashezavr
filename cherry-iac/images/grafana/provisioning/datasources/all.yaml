@@ -50,3 +50,20 @@ datasources:
         hide: false
       nodeGraph:
         enabled: true
+
+  - name: Postgres
+    type: postgres
+    uid: postgres
+    url: postgres:5432
+    user: cherry
+    secureJsonData:
+      password: 'cherry'
+    jsonData:
+      database: cherry_dev
+      sslmode: 'disable'
+      maxOpenConns: 100
+      maxIdleConns: 100
+      maxIdleConnsAuto: true
+      connMaxLifetime: 14400
+      postgresVersion: 1603
+      timescaledb: false

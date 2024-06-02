@@ -135,7 +135,7 @@
               "scope": "resource",
               "tag": "service.name",
               "value": [
-                "g-core"
+                "cherry-core"
               ],
               "valueType": "string"
             },

@@ -1,0 +1,630 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 9,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "postgres"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 557
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 22,
+        "w": 13,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "postgres"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT name, SUM(count) FROM receipt_item GROUP BY name ORDER BY SUM(count) DESC ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "name",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "count",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "name",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "SUM(count)",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC"
+          },
+          "table": "receipt_item"
+        }
+      ],
+      "title": "Список товаров",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "postgres"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 5,
+        "x": 13,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "postgres"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT COUNT(uuid) FROM client ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "name": "COUNT",
+                "parameters": [
+                  {
+                    "name": "uuid",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": null
+          },
+          "table": "client"
+        }
+      ],
+      "title": "Количество пользователей",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "postgres"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "postgres"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT COUNT(uuid) FROM receipt ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "name": "COUNT",
+                "parameters": [
+                  {
+                    "name": "uuid",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [],
+            "limit": null
+          },
+          "table": "receipt"
+        }
+      ],
+      "title": "Количество загруженных чеков",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "postgres"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Выгруженно успешно"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "shades"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Не выгруженно из за ошибки"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "shades"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Ожидает выгрузки"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "shades"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 13,
+        "y": 7
+      },
+      "id": 2,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "postgres"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(uuid) AS \"Не выгруженно из за ошибки\" FROM receipt WHERE (date IS NULL AND load_lock = true) ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"Не выгруженно из за ошибки\"",
+                "name": "COUNT",
+                "parameters": [
+                  {
+                    "name": "uuid",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [],
+            "limit": null,
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "bbabba9a-4567-489a-bcde-f18fbbdd19eb",
+                  "properties": {
+                    "field": "date",
+                    "fieldSrc": "field",
+                    "operator": "is_null",
+                    "value": [],
+                    "valueSrc": [],
+                    "valueType": []
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89b8aba9-0123-4456-b89a-b18fbbe2bc71",
+                  "properties": {
+                    "field": "load_lock",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": [
+                      true
+                    ],
+                    "valueSrc": [
+                      "value"
+                    ],
+                    "valueType": [
+                      "boolean"
+                    ]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "999a9889-0123-4456-b89a-b18fbbd28f39",
+              "type": "group"
+            },
+            "whereString": "(date IS NULL AND load_lock = true)"
+          },
+          "table": "receipt"
+        },
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "postgres"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT COUNT(uuid) AS \"Выгруженно успешно\" FROM receipt WHERE date IS NOT NULL ",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"Выгруженно успешно\"",
+                "name": "COUNT",
+                "parameters": [
+                  {
+                    "name": "uuid",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": null,
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "a9989989-89ab-4cde-b012-318fbbde43c0",
+                  "properties": {
+                    "field": "date",
+                    "fieldSrc": "field",
+                    "operator": "is_not_null",
+                    "value": [],
+                    "valueSrc": [],
+                    "valueType": []
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "999a9889-0123-4456-b89a-b18fbbd28f39",
+              "type": "group"
+            },
+            "whereString": "date IS NOT NULL"
+          },
+          "table": "receipt"
+        },
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "postgres"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT COUNT(uuid) AS \"Ожидает выгрузки\" FROM receipt WHERE (date IS NULL AND load_lock = false) ",
+          "refId": "C",
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"Ожидает выгрузки\"",
+                "name": "COUNT",
+                "parameters": [
+                  {
+                    "name": "uuid",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [],
+            "limit": null,
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8bb9ab9a-cdef-4012-b456-718fbbe3f795",
+                  "properties": {
+                    "field": "date",
+                    "fieldSrc": "field",
+                    "operator": "is_null",
+                    "value": [],
+                    "valueSrc": [],
+                    "valueType": []
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "ab8b999a-89ab-4cde-b012-318fbbe4146d",
+                  "properties": {
+                    "field": "load_lock",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": [
+                      false
+                    ],
+                    "valueSrc": [
+                      "value"
+                    ],
+                    "valueType": [
+                      "boolean"
+                    ]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "999a9889-0123-4456-b89a-b18fbbd28f39",
+              "type": "group"
+            },
+            "whereString": "(date IS NULL AND load_lock = false)"
+          },
+          "table": "receipt"
+        }
+      ],
+      "title": "Состояние выгрузки чеков из ФНС",
+      "type": "piechart"
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "DB",
+  "uid": "bdn08gdlsham8a",
+  "version": 4,
+  "weekStart": ""
+}
