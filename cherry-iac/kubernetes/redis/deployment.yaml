@@ -28,5 +28,15 @@ spec:
           env:
             - name: REDIS_REPLICATION_MODE
               value: master
+
+
+          resources:
+            requests:
+              memory: "350Mi"
+              cpu: "100m"
+            limits:
+              memory: "500Mi"
+              cpu: "500m"
+
       restartPolicy: Always
       

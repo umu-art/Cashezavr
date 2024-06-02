@@ -27,5 +27,14 @@ spec:
               value: rmpassword
             - name: RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS
               value: -rabbit disk_free_limit 2147483648
+
+          resources:
+            requests:
+              memory: "350Mi"
+              cpu: "100m"
+            limits:
+              memory: "500Mi"
+              cpu: "500m"
+
       restartPolicy: Always
       

@@ -42,6 +42,14 @@ spec:
             periodSeconds: 10
             failureThreshold: 15
 
+          resources:
+            requests:
+              memory: "350Mi"
+              cpu: "500m"
+            limits:
+              memory: "500Mi"
+              cpu: "1000m"
+
       imagePullSecrets:
         - name: github-container-registry
 
