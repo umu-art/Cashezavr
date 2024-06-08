@@ -34,13 +34,22 @@ spec:
             - name: SERVERPORT
               value: "30303"
             - name: PEERS
-              value: "1"
+              value: "3"
             - name: PEERDNS
               value: "10.96.0.10"
             - name: INTERNAL_SUBNET
               value: "10.13.13.0"
             - name: ALLOWEDIPS
               value: "0.0.0.0/0"
+
+          volumeMounts:
+            - mountPath: /config/
+              name: vpn-config
+
+      volumes:
+        - name: vpn-config
+          persistentVolumeClaim:
+            claimName: vpn-config-pvc
 
       restartPolicy: Always
       

@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: vpn-config-pv
+  labels:
+    type: local
+    app: vpn
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/data/vpn"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vpn-config-pvc
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 8Gi
