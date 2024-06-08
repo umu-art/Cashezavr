@@ -141,7 +141,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   kube-iac-update:
-    needs: [ build-monitoring-images ]
+    needs: [ build-iac-images ]
     runs-on: ubuntu-latest
 
     strategy:
