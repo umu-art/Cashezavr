@@ -2,7 +2,7 @@ import pika
 
 if __name__ == '__main__':
     credentials = pika.PlainCredentials('rmuser', 'rmpassword')
-    parameters = pika.ConnectionParameters('rabbit', 5672, '/', credentials)
+    parameters = pika.ConnectionParameters('rabbit.cashezavr-db', 5672, '/', credentials)
     connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
 
