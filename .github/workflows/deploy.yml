@@ -146,7 +146,7 @@ jobs:
 
     strategy:
       matrix:
-        app: [ grafana, loki, tempo, prometheus, proxy ]
+        app: [ grafana, loki, tempo, prometheus ]
 
     steps:
       - name: Set the Kubernetes context
@@ -158,6 +158,21 @@ jobs:
 
       - name: Deploy ${{ matrix.app }}
         run: kubectl rollout restart deployment/${{ matrix.app }} -n monitoring
+
+  kube-proxy-update:
+    needs: [ build-iac-images ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set the Kubernetes context
+        uses: azure/k8s-set-context@v4
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBESECRET }}
+          context: kubernetes-admin@kubernetes
+
+      - name: Deploy ${{ matrix.app }}
+        run: kubectl rollout restart deployment/proxy -n cluster
 
   build-utils-images:
     needs: [ test-java ]
