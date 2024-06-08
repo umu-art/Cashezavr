@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.kazenin.cashezavr.cashezavr.dto.InfraNames;
-import ru.kazenin.cashezavr.cashezavr.entity.BaseEntity;
+import ru.kazenin.cashezavr.common.dto.InfraNames;
+import ru.kazenin.cashezavr.common.entity.BaseEntity;
 import ru.kazenin.cashezavr.outside.jpa.ReceiptJpa;
 
 import java.util.concurrent.TimeUnit;

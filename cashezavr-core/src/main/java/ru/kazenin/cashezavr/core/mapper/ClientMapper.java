@@ -1,7 +1,7 @@
 package ru.kazenin.cashezavr.core.mapper;
 
 import org.mapstruct.Mapper;
-import ru.kazenin.cashezavr.cashezavr.entity.ClientEntity;
+import ru.kazenin.cashezavr.common.entity.ClientEntity;
 import ru.kazenin.model.ClientDto;
 import ru.kazenin.model.RegisterDto;
 

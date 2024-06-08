@@ -1,7 +1,7 @@
 package ru.kazenin.cashezavr.core.mapper;
 
 import org.mapstruct.Mapper;
-import ru.kazenin.cashezavr.cashezavr.entity.ReceiptEntity;
+import ru.kazenin.cashezavr.common.entity.ReceiptEntity;
 import ru.kazenin.model.ReceiptDto;
 
 import java.util.List;

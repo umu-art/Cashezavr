@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.kazenin.cashezavr.cashezavr.entity.PromotionEntity;
-import ru.kazenin.cashezavr.cashezavr.entity.ReceiptEntity;
+import ru.kazenin.cashezavr.common.entity.PromotionEntity;
+import ru.kazenin.cashezavr.common.entity.ReceiptEntity;
 import ru.kazenin.cashezavr.outside.jpa.PromotionJpa;
 import ru.kazenin.cashezavr.outside.service.FinanceService;
 

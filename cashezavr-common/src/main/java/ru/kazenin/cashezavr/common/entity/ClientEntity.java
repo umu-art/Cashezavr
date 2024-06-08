@@ -1,4 +1,4 @@
-package ru.kazenin.cashezavr.cashezavr.entity;
+package ru.kazenin.cashezavr.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,8 +15,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "manager")
-public class ManagerEntity extends BaseEntity {
+@Table(name = "client")
+public class ClientEntity extends BaseEntity {
 
     @Column(name = "username", unique = true, nullable = false)
     private String username;
@@ -24,6 +24,15 @@ public class ManagerEntity extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "company", nullable = false)
-    private String company;
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "actual_balance")
+    private double actualBalance;
+
+    @Column(name = "all_balance")
+    private double allBalance;
 }

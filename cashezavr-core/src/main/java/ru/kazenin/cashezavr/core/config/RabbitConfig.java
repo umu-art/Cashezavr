@@ -7,7 +7,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.kazenin.cashezavr.cashezavr.dto.InfraNames;
+import ru.kazenin.cashezavr.common.dto.InfraNames;
 
 @Configuration
 @EnableRabbit

@@ -1,4 +1,4 @@
-package ru.kazenin.cashezavr.cashezavr.entity;
+package ru.kazenin.cashezavr.common.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import ru.kazenin.cashezavr.cashezavr.dto.BillStatus;
+import ru.kazenin.cashezavr.common.dto.BillStatus;
 
 @SuperBuilder
 @Data

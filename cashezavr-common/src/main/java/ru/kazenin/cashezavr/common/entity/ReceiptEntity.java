@@ -1,4 +1,4 @@
-package ru.kazenin.cashezavr.cashezavr.entity;
+package ru.kazenin.cashezavr.common.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

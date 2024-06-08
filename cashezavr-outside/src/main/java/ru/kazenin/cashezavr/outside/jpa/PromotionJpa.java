@@ -2,7 +2,7 @@ package ru.kazenin.cashezavr.outside.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.kazenin.cashezavr.cashezavr.entity.PromotionEntity;
+import ru.kazenin.cashezavr.common.entity.PromotionEntity;
 
 import java.time.OffsetDateTime;
 import java.util.List;

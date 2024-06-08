@@ -1,4 +1,4 @@
-package ru.kazenin.cashezavr.cashezavr.dto;
+package ru.kazenin.cashezavr.common.dto;
 
 public class InfraNames {
 

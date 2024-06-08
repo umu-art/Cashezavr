@@ -1,7 +1,7 @@
 package ru.kazenin.cashezavr.core.mapper;
 
 import org.mapstruct.Mapper;
-import ru.kazenin.cashezavr.cashezavr.entity.BillEntity;
+import ru.kazenin.cashezavr.common.entity.BillEntity;
 import ru.kazenin.model.BillDto;
 
 import java.util.List;
