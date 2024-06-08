@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cashezavr-load-recovery
+  namespace: argocd
+  labels:
+    type: utils
+spec:
+  destination:
+    namespace: cashezavr-utils
+    server: https://kubernetes.default.svc
+  project: cashezavr
+  source:
+    path: cashezavr-iac/kubernetes/cashezavr-utils/cashezavr-load-recovery
+    repoURL: git@github.com:umu-art/cashezavr.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true

@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cashezavr-production
+  namespace: argocd
+  labels:
+    type: app
+spec:
+  destination:
+    namespace: cashezavr
+    server: https://kubernetes.default.svc
+  project: cashezavr
+  source:
+    path: cashezavr-iac/kubernetes/cashezavr/cashezavr-core
+    repoURL: git@github.com:umu-art/cashezavr.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true

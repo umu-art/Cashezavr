@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vpn
+  namespace: argocd
+  labels:
+    type: cluster
+spec:
+  destination:
+    namespace: cluster
+    server: https://kubernetes.default.svc
+  project: cashezavr
+  source:
+    path: cashezavr-iac/kubernetes/cluster/vpn
+    repoURL: git@github.com:umu-art/cashezavr.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true

@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redis
+  namespace: argocd
+  labels:
+    type: db
+spec:
+  destination:
+    namespace: cashezavr-db
+    server: https://kubernetes.default.svc
+  project: cashezavr
+  source:
+    path: cashezavr-iac/kubernetes/cashezavr-db/redis
+    repoURL: git@github.com:umu-art/cashezavr.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true

@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+  labels:
+    type: monitoring
+spec:
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  project: cashezavr
+  source:
+    path: cashezavr-iac/kubernetes/monitoring/loki
+    repoURL: git@github.com:umu-art/cashezavr.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true
