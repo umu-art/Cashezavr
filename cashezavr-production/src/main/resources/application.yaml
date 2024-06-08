@@ -3,7 +3,7 @@ spring:
     name: cashezavr-production
 
   datasource:
-    url: jdbc:postgresql://postgres:5432/cherry_dev
+    url: jdbc:postgresql://postgres.cashezavr-db:5432/cherry_dev
     username: cherry
     password: cherry
 

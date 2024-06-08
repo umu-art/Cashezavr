@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: cashezavr
   source:
-    path: cashezavr-iac/kubernetes/cashezavr/cashezavr-core
+    path: cashezavr-iac/kubernetes/cashezavr/cashezavr-production
     repoURL: git@github.com:umu-art/cashezavr.git
     targetRevision: master
   syncPolicy:

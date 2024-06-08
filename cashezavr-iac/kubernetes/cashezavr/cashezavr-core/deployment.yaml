@@ -3,7 +3,7 @@ kind: Deployment
 
 metadata:
   name: cashezavr-core
-  namespace: z
+  namespace: cashezavr
   labels:
     app: cashezavr-core
 
