@@ -36,9 +36,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
                                                    AuthenticationProvider authenticationProvider) throws Exception {
         http.authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/cherry/core/**").authenticated()
-                        .requestMatchers("/cherry/register").permitAll()
-                        .requestMatchers("/cherry/try").authenticated()
+                        .requestMatchers("/cashezavr/core/**").authenticated()
+                        .requestMatchers("/cashezavr/register").permitAll()
+                        .requestMatchers("/cashezavr/try").authenticated()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/actuator").permitAll()

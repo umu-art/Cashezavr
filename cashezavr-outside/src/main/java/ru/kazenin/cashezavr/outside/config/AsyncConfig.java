@@ -12,7 +12,7 @@ import java.util.concurrent.Executor;
 @EnableAsync
 public class AsyncConfig {
     @Bean(name = "loadExecutor")
-    public Executor loadExecutor(@Value("${cherry.executors.loadPoll}") int pollSize) {
+    public Executor loadExecutor(@Value("${cashezavr.executors.loadPoll}") int pollSize) {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(pollSize);
         executor.setMaxPoolSize(pollSize);

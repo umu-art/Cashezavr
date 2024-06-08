@@ -15,7 +15,7 @@ spring:
       ddl-auto: update  # TODO: migrations
     open-in-view: false
 
-cherry:
+cashezavr:
   receipts:
     poll:
       maxTime: 5000

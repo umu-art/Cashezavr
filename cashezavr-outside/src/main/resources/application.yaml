@@ -18,7 +18,7 @@ spring:
       port: 6379
       password: cherry
 
-cherry:
+cashezavr:
   executors:
     loadPoll: 3
   baseCashBack: 10

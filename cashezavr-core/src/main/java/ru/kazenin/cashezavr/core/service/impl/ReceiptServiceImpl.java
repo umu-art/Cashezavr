@@ -90,7 +90,7 @@ public class ReceiptServiceImpl implements ReceiptService {
      * Отправляем сообщение о новом чеке
      */
     private void notifyOutside() {
-        rabbitTemplate.convertAndSend(InfraNames.RECEIPT_LOAD_MESSAGES, "cherry");
+        rabbitTemplate.convertAndSend(InfraNames.RECEIPT_LOAD_MESSAGES, "cashezavr");
     }
 
     /**

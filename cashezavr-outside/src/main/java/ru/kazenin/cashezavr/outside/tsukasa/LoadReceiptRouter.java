@@ -18,7 +18,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @RequiredArgsConstructor
 public class LoadReceiptRouter {
 
-    @Value("${cherry.executors.loadPoll}")
+    @Value("${cashezavr.executors.loadPoll}")
     private int pollSize;
 
     private final ReentrantLock runLock = new ReentrantLock();

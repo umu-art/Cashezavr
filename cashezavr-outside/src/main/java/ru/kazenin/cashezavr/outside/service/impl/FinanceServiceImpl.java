@@ -16,7 +16,7 @@ import java.time.OffsetDateTime;
 @RequiredArgsConstructor
 public class FinanceServiceImpl implements FinanceService {
 
-    @Value("${cherry.baseCashBack}")
+    @Value("${cashezavr.baseCashBack}")
     private double baseCashBack;
 
     private final PromotionJpa promotionJpa;

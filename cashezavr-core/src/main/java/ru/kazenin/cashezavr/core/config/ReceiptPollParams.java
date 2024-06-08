@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReceiptPollParams {
 
-    @Value("${cherry.receipts.poll.maxTime}")
+    @Value("${cashezavr.receipts.poll.maxTime}")
     private int pollMaxTime;
 
-    @Value("${cherry.receipts.poll.waitTime}")
+    @Value("${cashezavr.receipts.poll.waitTime}")
     private int pollWaitTime;
 }
