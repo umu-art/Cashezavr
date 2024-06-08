@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: cashezavr-db
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      name: redis
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: dockerhub.timeweb.cloud/redis:latest
+          command:
+            - redis-server
+          args:
+            - --requirepass
+            - cherry
+          imagePullPolicy: Always
+          env:
+            - name: REDIS_REPLICATION_MODE
+              value: master
+
+          resources:
+            requests:
+              memory: "350Mi"
+              cpu: "100m"
+            limits:
+              memory: "500Mi"
+              cpu: "500m"
+
+      restartPolicy: Always
+      

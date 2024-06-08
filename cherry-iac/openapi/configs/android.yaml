@@ -1,9 +1,0 @@
-additionalProperties:
-  apiPackage: ru.kazenin.api
-  modelPackage: ru.kazenin.model
-  invokerPackage: ru.kazenin
-  groupId: ru.kazenin
-  artifactId: cherry-iac-android
-  serializableModel: "true"
-  useTags: true
-  library: httpclient

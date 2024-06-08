@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy
+  namespace: cluster
+  labels:
+    app: proxy
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: proxy
+
+  template:
+    metadata:
+      name: proxy
+      labels:
+        app: proxy
+
+    spec:
+      containers:
+        - name: proxy
+          image: ghcr.io/umu-art/proxy:master
+          imagePullPolicy: Always
+
+      imagePullSecrets:
+        - name: github-container-registry
+
+      restartPolicy: Always
+      

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tempo
+  namespace: monitoring
+  labels:
+    app: tempo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tempo
+  template:
+    metadata:
+      name: tempo
+      labels:
+        app: tempo
+    spec:
+      containers:
+        - name: tempo
+          image: ghcr.io/umu-art/tempo:master
+          imagePullPolicy: Always
+
+      imagePullSecrets:
+        - name: github-container-registry
+
+      restartPolicy: Always
+      

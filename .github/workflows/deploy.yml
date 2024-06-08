@@ -24,7 +24,7 @@ jobs:
           cache: 'maven'
 
       - name: Build api
-        run: (cd cherry-iac/openapi; chmod 777 ./build-core-api.sh;  ./build-core-api.sh)
+        run: (cd cashezavr-iac/openapi; chmod 777 ./build-core-api.sh;  ./build-core-api.sh)
 
       - name: Build with Maven
         run: mvn -B test -T1C --file pom.xml
@@ -36,7 +36,7 @@ jobs:
 
     strategy:
       matrix:
-        app: [ cherry-core, cherry-outside, cherry-production ]
+        app: [ cashezavr-core, cashezavr-outside, cashezavr-production ]
     
     permissions:
       contents: read
@@ -55,7 +55,7 @@ jobs:
           cache: 'maven'
 
       - name: Build api
-        run: (cd cherry-iac/openapi; chmod 777 ./build-core-api.sh;  ./build-core-api.sh)
+        run: (cd cashezavr-iac/openapi; chmod 777 ./build-core-api.sh;  ./build-core-api.sh)
 
       - name: Build with Maven
         run: mvn -B package -T1C --file pom.xml
@@ -88,7 +88,7 @@ jobs:
 
     strategy:
       matrix:
-        app: [ cherry-core, cherry-production ]
+        app: [ cashezavr-core, cashezavr-production ]
 
     steps:
       - name: Set the Kubernetes context
@@ -99,15 +99,15 @@ jobs:
           context: kubernetes-admin@kubernetes
 
       - name: Deploy ${{ matrix.app }}
-        run: kubectl rollout restart deployment/${{ matrix.app }} -n cherry
+        run: kubectl rollout restart deployment/${{ matrix.app }} -n cashezavr
 
-  build-monitoring-images:
+  build-iac-images:
     needs: [ test-java ]
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        app: [ grafana, loki, tempo, prometheus ]
+        app: [ grafana, loki, tempo, prometheus, proxy ]
 
     permissions:
       contents: read
@@ -134,19 +134,19 @@ jobs:
       - name: Build and push Docker image for ${{ matrix.app }}
         uses: docker/build-push-action@v5.3.0
         with:
-          context: ./cherry-iac/images/${{ matrix.app }}
-          file: ./cherry-iac/images/${{ matrix.app }}/Dockerfile
+          context: ./cashezavr-iac/images/${{ matrix.app }}
+          file: ./cashezavr-iac/images/${{ matrix.app }}/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  kube-monitoring-update:
+  kube-iac-update:
     needs: [ build-monitoring-images ]
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        app: [ grafana, loki, tempo, prometheus ]
+        app: [ grafana, loki, tempo, prometheus, proxy ]
 
     steps:
       - name: Set the Kubernetes context
@@ -157,8 +157,7 @@ jobs:
           context: kubernetes-admin@kubernetes
 
       - name: Deploy ${{ matrix.app }}
-        run: kubectl rollout restart deployment/${{ matrix.app }} -n cherry
-
+        run: kubectl rollout restart deployment/${{ matrix.app }} -n monitoring
 
   build-utils-images:
     needs: [ test-java ]
@@ -166,7 +165,7 @@ jobs:
 
     strategy:
       matrix:
-        app: [ cherry-load-recovery ]
+        app: [ cashezavr-load-recovery ]
 
     permissions:
       contents: read
@@ -193,8 +192,8 @@ jobs:
       - name: Build and push Docker image for ${{ matrix.app }}
         uses: docker/build-push-action@v5.3.0
         with:
-          context: ./cherry-iac/utils/${{ matrix.app }}
-          file: ./cherry-iac/utils/${{ matrix.app }}/Dockerfile
+          context: ./cashezavr-iac/utils/${{ matrix.app }}
+          file: ./cashezavr-iac/utils/${{ matrix.app }}/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

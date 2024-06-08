@@ -1,0 +1,81 @@
+openapi: 3.0.3
+
+info:
+  title: cashezavr receipts
+  description: Работа с чеками
+  version: 1.0.0
+
+servers:
+  - url: 'wait.ru'
+
+paths:
+  /cashezavr/core/receipt/load:
+    post:
+      tags:
+        - receipt
+      description: Загрузка чека в систему
+      operationId: loadReceipt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReceiptRequestDto"
+      responses:
+        200:
+          description: Выгруженный чек
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReceiptDto"
+        201:
+          description: Загружено, чек будет позже
+
+  /cashezavr/core/receipt/getAll:
+    get:
+      tags:
+        - receipt
+      description: Получение списка чеков
+      operationId: getAllReceipts
+      responses:
+        200:
+          description: Список загруженных чеков
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReceiptDto"
+
+components:
+  schemas:
+    ReceiptRequestDto:
+      required:
+        - qr
+      properties:
+        qr:
+          type: string
+
+    ReceiptDto:
+      properties:
+        qr:
+          type: string
+        date:
+          type: string
+          format: date-time
+        shop:
+          type: string
+        receiptItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReceiptItemDto"
+        returnSum:
+          type: number
+
+    ReceiptItemDto:
+      properties:
+        name:
+          type: string
+        count:
+          type: integer
+        price:
+          type: number

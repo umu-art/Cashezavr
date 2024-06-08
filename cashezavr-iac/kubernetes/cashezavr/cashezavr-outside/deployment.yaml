@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: cashezavr-outside
+  namespace: cashezavr
+  labels:
+    app: cashezavr-outside
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: cashezavr-outside
+
+  template:
+    metadata:
+      name: cashezavr-outside
+      labels:
+        app: cashezavr-outside
+
+    spec:
+      containers:
+        - name: cashezavr-outside
+          image: ghcr.io/umu-art/cashezavr-outside:master
+          imagePullPolicy: Always
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 3002
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            failureThreshold: 15
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 3002
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            failureThreshold: 15
+
+          resources:
+            requests:
+              memory: "350Mi"
+              cpu: "500m"
+            limits:
+              memory: "500Mi"
+              cpu: "1000m"
+
+      imagePullSecrets:
+        - name: github-container-registry
+
+      restartPolicy: Always
+      

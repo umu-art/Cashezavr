@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>ru.kazenin</groupId>
-    <artifactId>cherry</artifactId>
+    <artifactId>cashezavr</artifactId>
     <version>1.0-ALPHA</version>
     <packaging>pom</packaging>
 
@@ -22,16 +22,16 @@
     </properties>
 
     <modules>
-        <module>cherry-common</module>
-        <module>cherry-core</module>
-        <module>cherry-outside</module>
-        <module>cherry-production</module>
+        <module>cashezavr-common</module>
+        <module>cashezavr-core</module>
+        <module>cashezavr-outside</module>
+        <module>cashezavr-production</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>ru.kazenin</groupId>
-            <artifactId>cherry-iac</artifactId>
+            <artifactId>cashezavr-iac</artifactId>
             <version>1.0.0</version>
         </dependency>
 

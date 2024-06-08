@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: cashezavr-production
+  namespace: cashezavr
+  labels:
+    app: cashezavr-production
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: cashezavr-production
+
+  template:
+    metadata:
+      name: cashezavr-production
+      labels:
+        app: cashezavr-production
+
+    spec:
+      containers:
+        - name: cashezavr-production
+          image: ghcr.io/umu-art/cashezavr-production:master
+          imagePullPolicy: Always
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 3003
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            failureThreshold: 15
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 3003
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            failureThreshold: 15
+
+          resources:
+            requests:
+              memory: "350Mi"
+              cpu: "500m"
+            limits:
+              memory: "500Mi"
+              cpu: "1000m"
+
+      imagePullSecrets:
+        - name: github-container-registry
+
+      restartPolicy: Always

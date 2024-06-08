@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: monitoring
+  labels:
+    app: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      name: prometheus
+      labels:
+        app: prometheus
+    spec:
+      containers:
+        - name: prometheus
+          image: ghcr.io/umu-art/prometheus:master
+          imagePullPolicy: Always
+
+      imagePullSecrets:
+        - name: github-container-registry
+
+      restartPolicy: Always
+      
