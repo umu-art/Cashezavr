@@ -3,9 +3,9 @@ spring:
     name: cashezavr-core
 
   datasource:
-    url: jdbc:postgresql://postgres.cashezavr-db:5432/cherry_dev
-    username: cherry
-    password: cherry
+    url: jdbc:postgresql://postgres.cashezavr-db:5432/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
   flyway:
     baseline-on-migrate: true
     baseline-version: 0.0.1
@@ -30,8 +30,8 @@ server:
 
 rabbit:
   host: rabbit.cashezavr-db
-  login: rmuser
-  password: rmpassword
+  login: ${RABBIT_USER}
+  password: ${RABBIT_PASSWORD}
 
 management:
   endpoints:

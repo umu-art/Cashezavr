@@ -31,6 +31,36 @@ spec:
               value: >-
                 -Dspring.config.location=file:/config/application.yml
 
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: POSTGRES_DB
+
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: POSTGRES_USER
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: POSTGRES_PASSWORD
+
+            - name: RABBIT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: RABBIT_USER
+
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: RABBIT_PASSWORD
+
           volumeMounts:
             - name: config
               mountPath: /config
