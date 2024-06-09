@@ -9,7 +9,7 @@ generatorOptions:
   disableNameSuffixHash: true
 
 configMapGenerator:
-  - name: application-properties-core
+  - name: application-properties-outside
     behavior: create
     files:
       - application.yaml

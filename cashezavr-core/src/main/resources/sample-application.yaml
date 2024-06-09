@@ -1,0 +1,74 @@
+spring:
+  application:
+    name: cashezavr-core
+
+  datasource:
+    url: jdbc:postgresql://postgres.cashezavr-db:5432/--------
+    username: --------
+    password: --------
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0.0.1
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # TODO: migrations
+    open-in-view: false
+
+cashezavr:
+  receipts:
+    poll:
+      maxTime: 5000
+      waitTime: 100
+
+server:
+  port: 3001
+  error:
+    include-exception: true
+    include-message: always
+    include-binding-errors: always
+
+rabbit:
+  host: rabbit.cashezavr-db
+  login: --------
+  password: --------
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+  zipkin:
+    tracing:
+      endpoint: http://tempo.monitoring:9411/api/v2/spans
+
+logging:
+  level:
+    root: info
+    ru.kazenin: trace
+

@@ -20,13 +20,26 @@ spec:
         - name: postgres
           image: dockerhub.timeweb.cloud/postgres:latest
           imagePullPolicy: Always
+
           env:
             - name: POSTGRES_DB
-              value: cherry_dev
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: POSTGRES_DB
+
             - name: POSTGRES_USER
-              value: cherry
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: POSTGRES_USER
+
             - name: POSTGRES_PASSWORD
-              value: cherry
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: POSTGRES_PASSWORD
+
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: db-storage

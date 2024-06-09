@@ -38,6 +38,7 @@ build/
 ### IaC ###
 /cashezavr-iac/openapi/server/
 /cashezavr-iac/openapi/android/
+/cashezavr-iac/kubernetes/secrets/
 
 ### Android ###
 /cashezavr-app/build/

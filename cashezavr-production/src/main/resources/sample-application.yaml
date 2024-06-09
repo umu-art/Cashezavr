@@ -3,9 +3,9 @@ spring:
     name: cashezavr-production
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/cherry_dev
-    username: cherry
-    password: cherry
+    url: jdbc:postgresql://postgres.cashezavr-db:5432/--------
+    username: --------
+    password: --------
 
   jpa:
     hibernate:

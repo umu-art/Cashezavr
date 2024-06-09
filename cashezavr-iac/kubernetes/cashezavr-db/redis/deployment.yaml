@@ -23,9 +23,16 @@ spec:
             - redis-server
           args:
             - --requirepass
-            - cherry
+            - ${REDIS_PASSWORD}
           imagePullPolicy: Always
+
           env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: REDIS_PASSWORD
+
             - name: REDIS_REPLICATION_MODE
               value: master
 

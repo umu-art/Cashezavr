@@ -1,37 +1,47 @@
 spring:
   application:
-    name: cashezavr-core
+    name: cashezavr-outside
 
   datasource:
-    url: jdbc:postgresql://postgres.cashezavr-db:5432/cherry_dev
+    url: jdbc:postgresql://postgres.cashezavr-db:5432/--------
     username: --------
     password: --------
-  flyway:
-    baseline-on-migrate: true
-    baseline-version: 0.0.1
 
   jpa:
     hibernate:
-      ddl-auto: update  # TODO: migrations
+      ddl-auto: none
     open-in-view: false
 
-cashezavr:
-  receipts:
-    poll:
-      maxTime: 5000
-      waitTime: 100
+  data:
+    redis:
+      host: redis.cashezavr-db
+      port: 6379
+      password: --------
 
-server:
-  port: 3001
-  error:
-    include-exception: true
-    include-message: always
-    include-binding-errors: always
+cashezavr:
+  executors:
+    loadPoll: 3
+  baseCashBack: 10
+
+fns:
+  host: "https://irkkt-mobile.nalog.ru:8888"
+  userAgent: "billchecker/2.9.0 (iPhone; iOS 13.6; Scale/2.00)"
+  deviceOS: "Android"
+  deviceID: "597d8cb6-c96b-4693-8e1c-24e5f9983f04"
+  clientVersion: "2.9.0"
+  clientSecret: "IyvrAbKt9h/8p6a7QPh8gpkXYQ4="
 
 rabbit:
   host: rabbit.cashezavr-db
   login: --------
   password: --------
+
+server:
+  port: 3002
+  error:
+    include-exception: true
+    include-message: always
+    include-binding-errors: always
 
 management:
   endpoints:
@@ -70,5 +80,4 @@ management:
 logging:
   level:
     root: info
-    ru.kazenin: trace
-
+    ru.kazenin: debug

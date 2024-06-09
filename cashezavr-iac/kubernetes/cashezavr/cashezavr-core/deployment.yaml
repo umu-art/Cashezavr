@@ -92,7 +92,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: application-properties
+            name: application-properties-core
 
       imagePullSecrets:
         - name: github-container-registry

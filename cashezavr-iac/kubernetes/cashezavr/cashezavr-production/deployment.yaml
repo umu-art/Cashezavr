@@ -26,6 +26,33 @@ spec:
           image: ghcr.io/umu-art/cashezavr-production:master
           imagePullPolicy: Always
 
+          env:
+            - name: JAVA_OPTS
+              value: >-
+                -Dspring.config.location=file:/config/application.yml
+
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: POSTGRES_DB
+
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: POSTGRES_USER
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: POSTGRES_PASSWORD
+
+          volumeMounts:
+            - name: config
+              mountPath: /config
+
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -49,6 +76,11 @@ spec:
             limits:
               memory: "500Mi"
               cpu: "1000m"
+
+      volumes:
+        - name: config
+          configMap:
+            name: application-properties-production
 
       imagePullSecrets:
         - name: github-container-registry
