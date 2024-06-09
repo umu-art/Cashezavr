@@ -22,8 +22,8 @@ spec:
           command:
             - redis-server
           args:
-            - --requirepass
-            - ${REDIS_PASSWORD}
+            - "--requirepass"
+            - "$(REDIS_PASSWORD)"
           imagePullPolicy: Always
 
           env:
