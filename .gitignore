@@ -27,6 +27,7 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+!**/resourses/application.yaml
 
 ### VS Code ###
 .vscode/
@@ -40,3 +41,5 @@ build/
 
 ### Android ###
 /cashezavr-app/build/
+
+/venv/

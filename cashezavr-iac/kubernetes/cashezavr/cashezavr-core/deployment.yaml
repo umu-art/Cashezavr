@@ -26,6 +26,15 @@ spec:
           image: ghcr.io/umu-art/cashezavr-core:master
           imagePullPolicy: Always
 
+          env:
+            - name: JAVA_OPTS
+              value: >-
+                -Dspring.config.location=file:/config/application.yml
+
+          volumeMounts:
+            - name: config
+              mountPath: /config
+
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -49,6 +58,11 @@ spec:
             limits:
               memory: "500Mi"
               cpu: "1000m"
+
+      volumes:
+        - name: config
+          configMap:
+            name: application-properties
 
       imagePullSecrets:
         - name: github-container-registry
