@@ -14,6 +14,19 @@ spec:
               image: ghcr.io/umu-art/cashezavr-load-recovery:master
               imagePullPolicy: Always
 
+          env:
+            - name: RABBIT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: RABBIT_USER
+
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cashezavr-secrets
+                  key: RABBIT_PASSWORD
+
           imagePullSecrets:
             - name: github-container-registry
 
