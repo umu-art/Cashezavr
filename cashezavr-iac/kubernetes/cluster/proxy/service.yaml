@@ -10,4 +10,9 @@ spec:
     - name: http
       port: 80
       protocol: TCP
+
+    - name: grpc
+      port: 5445
+      protocol: TCP
+
   type: LoadBalancer
