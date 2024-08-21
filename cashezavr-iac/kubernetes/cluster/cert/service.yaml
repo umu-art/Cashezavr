@@ -5,9 +5,9 @@ metadata:
   namespace: cluster
 spec:
   selector:
-    app: postgres
+    app: cert
   ports:
     - protocol: TCP
-      port: 5432
-      targetPort: 5432
+      port: 6000
   type: ClusterIP
+  

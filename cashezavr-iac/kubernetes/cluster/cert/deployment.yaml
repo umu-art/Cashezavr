@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cert
+  namespace: cluster
+  labels:
+    app: cert
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cert
+  template:
+    metadata:
+      name: cert
+      labels:
+        app: cert
+    spec:
+      containers:
+        - name: cert
+          image: dockerhub.timeweb.cloud/ubuntu:latest
+          imagePullPolicy: Always
+
+          volumeMounts:
+            - mountPath: /cert
+              name: cert-storage
+
+          command:
+            - top
+          args:
+            - -b
+
+      volumes:
+        - name: cert-storage
+          persistentVolumeClaim:
+            claimName: cert-pvc
+
+      restartPolicy: Always
