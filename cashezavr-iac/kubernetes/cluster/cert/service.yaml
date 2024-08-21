@@ -8,6 +8,6 @@ spec:
     app: cert
   ports:
     - protocol: TCP
-      port: 6000
+      port: 80
   type: ClusterIP
   
